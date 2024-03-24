@@ -1,10 +1,10 @@
 package domain
 
-type User struct {
-	Id    int
-	Name  string
-	Tasks []Task
-}
+// type User struct {
+// 	Id    int
+// 	Name  string
+// 	Tasks []Task
+// }
 
 type UserAddReq struct {
 	FirstName    string
@@ -25,7 +25,7 @@ type UserUpdateReq struct {
 
 type UserDeleteReq struct {
 	Id           int
-	DeleteUserId int
+	UpdateUserId int
 }
 
 type UserGetByIdReq struct {
@@ -43,9 +43,9 @@ type UserGetAllResp struct {
 }
 
 type UserGetDataList struct {
-	Id        *int
-	FirstName *string
-	LastName  *string
-	Email     *string
+	Id        int
+	FirstName string
+	LastName  string
+	Email     string
 	CreatedAt string
 }

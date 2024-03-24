@@ -10,6 +10,8 @@ import (
 
 	"task-process-service/internal/domain"
 	mock "task-process-service/internal/repository/mock"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestTaskHandler_Create(t *testing.T) {
@@ -42,4 +44,52 @@ func TestTaskHandler_Create(t *testing.T) {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			actual, expected)
 	}
+}
+
+func TestTaskHandler_Update(t *testing.T) {
+	mockRepo := new(mock.MockTaskRepository)
+
+	task := domain.TaskUpdateReq{Id: 1, Title: "Test Task", Description: "Test Description", StatusId: 1, UpdateUserId: 1}
+	mockRepo.On("Update", task).Return(1, nil)
+
+	handler := NewTaskHandler(mockRepo)
+
+	body, _ := json.Marshal(task)
+	req, err := http.NewRequest("PUT", "/tasks/update", bytes.NewBuffer(body))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	handler.Update(rr, req)
+
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	expectedBody := `{"id":1}`
+	assert.JSONEq(t, expectedBody, rr.Body.String())
+}
+
+func TestTaskHandler_Delete(t *testing.T) {
+	mockRepo := new(mock.MockTaskRepository)
+
+	task := domain.TaskDeleteReq{Id: 1, UpdateUserId: 1}
+	mockRepo.On("Delete", task).Return(1, nil)
+
+	handler := NewTaskHandler(mockRepo)
+
+	body, _ := json.Marshal(task)
+	req, err := http.NewRequest("DELETE", "/tasks/delete", bytes.NewBuffer(body))
+	if err != nil {
+		t.Fatal("Hata olustu: ", err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	handler.Delete(rr, req)
+
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	expectedBody := `{"id":1}`
+	assert.JSONEq(t, expectedBody, rr.Body.String())
 }

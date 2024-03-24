@@ -76,11 +76,11 @@ func (pg *TaskRepositoryImpl) Delete(task domain.TaskDeleteReq) (int, error) {
 
 	qInsert := `update test.tasks 
 	set is_deleted = true, updated_at = $1, update_user_id = $2
-	where id = $3
+	where id = $3 and is_deleted = false
 	returning id;`
 	err := pg.db.QueryRow(context.Background(), qInsert,
 		&DeleteDate,
-		task.DeleteUserId,
+		task.UpdateUserId,
 		task.Id,
 	).Scan(&id)
 	if err != nil {

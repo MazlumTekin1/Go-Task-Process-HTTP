@@ -21,7 +21,7 @@ func (m *MockUserRepository) GetAll() ([]domain.UserGetDataList, error) {
 }
 
 func (m *MockUserRepository) GetById(task domain.UserGetByIdReq) (domain.UserGetDataList, error) {
-	args := m.Called(task.Id)
+	args := m.Called(task)
 	return args.Get(0).(domain.UserGetDataList), args.Error(1)
 }
 
@@ -31,6 +31,6 @@ func (m *MockUserRepository) Update(task domain.UserUpdateReq) (int, error) {
 }
 
 func (m *MockUserRepository) Delete(task domain.UserDeleteReq) (int, error) {
-	args := m.Called(task.Id)
-	return args.Int(0), args.Error(0)
+	args := m.Called(task)
+	return args.Int(0), args.Error(1)
 }

@@ -1,11 +1,11 @@
 package domain
 
-type Task struct {
-	Id     int
-	UserId int
-	Name   string
-	Status string
-}
+// type Task struct {
+// 	Id     int
+// 	UserId int
+// 	Name   string
+// 	Status string
+// }
 
 type TaskAddReq struct {
 	Title        string
@@ -24,7 +24,7 @@ type TaskUpdateReq struct {
 
 type TaskDeleteReq struct {
 	Id           int
-	DeleteUserId int
+	UpdateUserId int
 }
 
 type TaskGetByIdReq struct {

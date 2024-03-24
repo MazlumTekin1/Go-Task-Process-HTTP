@@ -78,11 +78,11 @@ func (pg *UserRepositoryImpl) Delete(User domain.UserDeleteReq) (int, error) {
 
 	qInsert := `update test.users 
 	set is_deleted = true, updated_at = $1, update_user_id = $2
-	where id = $3
+	where id = $3 and is_deleted = false
 	returning id;`
 	err := pg.db.QueryRow(context.Background(), qInsert,
 		&DeleteDate,
-		User.DeleteUserId,
+		User.UpdateUserId,
 		User.Id,
 	).Scan(&id)
 	if err != nil {
