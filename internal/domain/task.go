@@ -1,12 +1,5 @@
 package domain
 
-// type Task struct {
-// 	Id     int
-// 	UserId int
-// 	Name   string
-// 	Status string
-// }
-
 type TaskAddReq struct {
 	Title        string
 	Description  string
@@ -47,5 +40,7 @@ type TaskGetDataList struct {
 	Description *string
 	StatusId    *int
 	Status      *string
+	Duration    int
+	Difficulty  int
 	CreatedAt   string
 }

@@ -96,7 +96,7 @@ func (pg *UserRepositoryImpl) GetById(User domain.UserGetByIdReq) (domain.UserGe
 	res := domain.UserGetDataList{}
 	var createdAt time.Time
 	qInsert := `SELECT 
-	id, first_name, last_name, email, created_at
+	id, first_name, last_name, email, created_at, user_level
 	FROM test.users
 	where is_deleted = false and id = $1`
 	err := pg.db.QueryRow(context.Background(), qInsert, User.Id).Scan(
@@ -105,6 +105,7 @@ func (pg *UserRepositoryImpl) GetById(User domain.UserGetByIdReq) (domain.UserGe
 		&res.LastName,
 		&res.Email,
 		&createdAt,
+		&res.DeveloperWorkHourDifficulty,
 	)
 	if err != nil {
 		return res, domain.NewDatabaseError("UserRepositoryImpl.GetById", err)
@@ -118,7 +119,7 @@ func (pg *UserRepositoryImpl) GetAll() ([]domain.UserGetDataList, error) {
 	res := []domain.UserGetDataList{}
 	var createdAt time.Time
 	qInsert := `SELECT 
-	id, first_name, last_name, email, created_at
+	id, first_name, last_name, email, created_at, user_level
 	FROM test.users
 	where is_deleted = false
 	order by id desc;`
@@ -137,6 +138,7 @@ func (pg *UserRepositoryImpl) GetAll() ([]domain.UserGetDataList, error) {
 			&row.LastName,
 			&row.Email,
 			&createdAt,
+			&row.DeveloperWorkHourDifficulty,
 		)
 		if err != nil {
 			return res, domain.NewDatabaseError("UserRepositoryImpl.GetAll", err)

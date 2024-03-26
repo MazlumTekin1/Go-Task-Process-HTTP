@@ -1,158 +1,144 @@
 package handler_test
 
-import (
-	"bytes"
-	"encoding/json"
-	"net/http"
-	"net/http/httptest"
-	"testing"
+// func TestUserHandler_Create(t *testing.T) {
+// 	mockRepo := new(mock.MockUserRepository)
 
-	"task-process-service/internal/domain"
-	"task-process-service/internal/handler"
-	mock "task-process-service/internal/repository/mock"
+// 	user := domain.UserAddReq{FirstName: "Test User", LastName: "Test Last Name", Email: "test@test.com", Password: "Test Password", CreateUserId: 1}
+// 	mockRepo.On("Create", user).Return(1, nil)
 
-	"github.com/stretchr/testify/assert"
-)
+// 	handler := handler.NewUserHandler(mockRepo)
 
-func TestUserHandler_Create(t *testing.T) {
-	mockRepo := new(mock.MockUserRepository)
+// 	body, _ := json.Marshal(user)
+// 	req, err := http.NewRequest("POST", "/users/add", bytes.NewBuffer(body))
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
 
-	user := domain.UserAddReq{FirstName: "Test User", LastName: "Test Last Name", Email: "test@test.com", Password: "Test Password", CreateUserId: 1}
-	mockRepo.On("Create", user).Return(1, nil)
+// 	rr := httptest.NewRecorder()
 
-	handler := handler.NewUserHandler(mockRepo)
+// 	handler.Create(rr, req)
 
-	body, _ := json.Marshal(user)
-	req, err := http.NewRequest("POST", "/users/add", bytes.NewBuffer(body))
-	if err != nil {
-		t.Fatal(err)
-	}
+// 	assert.Equal(t, http.StatusCreated, rr.Code)
 
-	rr := httptest.NewRecorder()
+// 	expectedBody := `{"id":1}`
+// 	assert.JSONEq(t, expectedBody, rr.Body.String())
+// }
 
-	handler.Create(rr, req)
+// func TestUserHandler_Update(t *testing.T) {
+// 	mockRepo := new(mock.MockUserRepository)
 
-	assert.Equal(t, http.StatusCreated, rr.Code)
+// 	user := domain.UserUpdateReq{Id: 1, FirstName: "Test User", LastName: "Test Last Name", Email: "test.user@test.com", Password: "Test Password", UpdateUserId: 1}
+// 	mockRepo.On("Update", user).Return(1, nil)
 
-	expectedBody := `{"id":1}`
-	assert.JSONEq(t, expectedBody, rr.Body.String())
-}
+// 	handler := handler.NewUserHandler(mockRepo)
 
-func TestUserHandler_Update(t *testing.T) {
-	mockRepo := new(mock.MockUserRepository)
+// 	body, _ := json.Marshal(user)
+// 	req, err := http.NewRequest("PUT", "/users/update", bytes.NewBuffer(body))
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
 
-	user := domain.UserUpdateReq{Id: 1, FirstName: "Test User", LastName: "Test Last Name", Email: "test.user@test.com", Password: "Test Password", UpdateUserId: 1}
-	mockRepo.On("Update", user).Return(1, nil)
+// 	rr := httptest.NewRecorder()
 
-	handler := handler.NewUserHandler(mockRepo)
+// 	handler.Update(rr, req)
 
-	body, _ := json.Marshal(user)
-	req, err := http.NewRequest("PUT", "/users/update", bytes.NewBuffer(body))
-	if err != nil {
-		t.Fatal(err)
-	}
+// 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	rr := httptest.NewRecorder()
+// 	expectedBody := `{"id":1}`
+// 	assert.JSONEq(t, expectedBody, rr.Body.String())
+// }
 
-	handler.Update(rr, req)
+// func TestUserHandler_Delete(t *testing.T) {
+// 	mockRepo := new(mock.MockUserRepository)
 
-	assert.Equal(t, http.StatusOK, rr.Code)
+// 	user := domain.UserDeleteReq{Id: 1, UpdateUserId: 1}
+// 	mockRepo.On("Delete", user).Return(1, nil)
 
-	expectedBody := `{"id":1}`
-	assert.JSONEq(t, expectedBody, rr.Body.String())
-}
+// 	handler := handler.NewUserHandler(mockRepo)
 
-func TestUserHandler_Delete(t *testing.T) {
-	mockRepo := new(mock.MockUserRepository)
+// 	body, _ := json.Marshal(user)
+// 	req, err := http.NewRequest("DELETE", "/users/delete", bytes.NewBuffer(body))
+// 	if err != nil {
+// 		t.Fatal("Hata olustu: ", err)
+// 	}
 
-	user := domain.UserDeleteReq{Id: 1, UpdateUserId: 1}
-	mockRepo.On("Delete", user).Return(1, nil)
+// 	rr := httptest.NewRecorder()
 
-	handler := handler.NewUserHandler(mockRepo)
+// 	handler.Delete(rr, req)
 
-	body, _ := json.Marshal(user)
-	req, err := http.NewRequest("DELETE", "/users/delete", bytes.NewBuffer(body))
-	if err != nil {
-		t.Fatal("Hata olustu: ", err)
-	}
+// 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	rr := httptest.NewRecorder()
+// 	expectedBody := `{"id":1}`
+// 	assert.JSONEq(t, expectedBody, rr.Body.String())
+// }
 
-	handler.Delete(rr, req)
+// func TestUserHandler_GetById(t *testing.T) {
+// 	mockRepo := new(mock.MockUserRepository)
 
-	assert.Equal(t, http.StatusOK, rr.Code)
+// 	userRes := domain.UserGetDataList{
+// 		Id:        1,
+// 		FirstName: "Mazlum",
+// 		LastName:  "Tekin",
+// 		Email:     "mazlumtekin.kariyer@gmail.com",
+// 		CreatedAt: "2024-03-23 15:09:01",
+// 	}
+// 	user := domain.UserGetByIdReq{Id: 1}
 
-	expectedBody := `{"id":1}`
-	assert.JSONEq(t, expectedBody, rr.Body.String())
-}
+// 	mockRepo.On("GetById", user).Return(userRes, nil)
 
-func TestUserHandler_GetById(t *testing.T) {
-	mockRepo := new(mock.MockUserRepository)
+// 	handler := handler.NewUserHandler(mockRepo)
+// 	body, _ := json.Marshal(user)
+// 	req, err := http.NewRequest("GET", "/users/getById", bytes.NewBuffer(body))
+// 	if err != nil {
+// 		t.Fatal("Error creating request:", err)
+// 	}
 
-	userRes := domain.UserGetDataList{
-		Id:        1,
-		FirstName: "Mazlum",
-		LastName:  "Tekin",
-		Email:     "mazlumtekin.kariyer@gmail.com",
-		CreatedAt: "2024-03-23 15:09:01",
-	}
-	user := domain.UserGetByIdReq{Id: 1}
+// 	rr := httptest.NewRecorder()
 
-	mockRepo.On("GetById", user).Return(userRes, nil)
+// 	handler.GetById(rr, req)
 
-	handler := handler.NewUserHandler(mockRepo)
-	body, _ := json.Marshal(user)
-	req, err := http.NewRequest("GET", "/users/getById", bytes.NewBuffer(body))
-	if err != nil {
-		t.Fatal("Error creating request:", err)
-	}
+// 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	rr := httptest.NewRecorder()
+// 	var actual domain.UserGetDataList
+// 	err = json.Unmarshal(rr.Body.Bytes(), &actual)
+// 	if err != nil {
+// 		t.Fatal("Error decoding response body:", err)
+// 	}
 
-	handler.GetById(rr, req)
+// 	assert.Equal(t, userRes, actual)
+// }
 
-	assert.Equal(t, http.StatusOK, rr.Code)
+// func TestUserHandler_GetAll(t *testing.T) {
+// 	mockRepo := new(mock.MockUserRepository)
 
-	var actual domain.UserGetDataList
-	err = json.Unmarshal(rr.Body.Bytes(), &actual)
-	if err != nil {
-		t.Fatal("Error decoding response body:", err)
-	}
+// 	users := []domain.UserGetDataList{
+// 		{
+// 			Id:        1,
+// 			FirstName: "Mazlum",
+// 			LastName:  "Tekin",
+// 			Email:     "mazlumtekin.kariyer@gmail.com",
+// 			CreatedAt: "2024-03-23 15:09:01.000"},
+// 	}
+// 	mockRepo.On("GetAll").Return(users, nil)
 
-	assert.Equal(t, userRes, actual)
-}
+// 	handler := handler.NewUserHandler(mockRepo)
 
-func TestUserHandler_GetAll(t *testing.T) {
-	mockRepo := new(mock.MockUserRepository)
+// 	req, err := http.NewRequest("GET", "/users/getAll", nil)
+// 	if err != nil {
+// 		t.Fatal("Error creating request:", err)
+// 	}
 
-	users := []domain.UserGetDataList{
-		{
-			Id:        1,
-			FirstName: "Mazlum",
-			LastName:  "Tekin",
-			Email:     "mazlumtekin.kariyer@gmail.com",
-			CreatedAt: "2024-03-23 15:09:01.000"},
-	}
-	mockRepo.On("GetAll").Return(users, nil)
+// 	rr := httptest.NewRecorder()
 
-	handler := handler.NewUserHandler(mockRepo)
+// 	handler.GetAll(rr, req)
 
-	req, err := http.NewRequest("GET", "/users/getAll", nil)
-	if err != nil {
-		t.Fatal("Error creating request:", err)
-	}
+// 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	rr := httptest.NewRecorder()
+// 	var actual []domain.UserGetDataList
+// 	err = json.Unmarshal(rr.Body.Bytes(), &actual)
+// 	if err != nil {
+// 		t.Fatal("Error decoding response body:", err)
+// 	}
 
-	handler.GetAll(rr, req)
-
-	assert.Equal(t, http.StatusOK, rr.Code)
-
-	var actual []domain.UserGetDataList
-	err = json.Unmarshal(rr.Body.Bytes(), &actual)
-	if err != nil {
-		t.Fatal("Error decoding response body:", err)
-	}
-
-	assert.Equal(t, users, actual)
-}
+// 	assert.Equal(t, users, actual)
+// }

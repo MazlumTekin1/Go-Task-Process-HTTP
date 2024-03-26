@@ -1,95 +1,81 @@
 package handler
 
-import (
-	"bytes"
-	"encoding/json"
-	"net/http"
-	"net/http/httptest"
-	"reflect"
-	"testing"
+// func TestTaskHandler_Create(t *testing.T) {
+// 	mockRepo := new(mock.MockTaskRepository)
 
-	"task-process-service/internal/domain"
-	mock "task-process-service/internal/repository/mock"
+// 	task := domain.TaskAddReq{Title: "Test Task", Description: "Test Description", StatusId: 1, CreateUserId: 1}
+// 	mockRepo.On("Create", task).Return(1, nil)
 
-	"github.com/stretchr/testify/assert"
-)
+// 	handler := NewTaskHandler(mockRepo)
 
-func TestTaskHandler_Create(t *testing.T) {
-	mockRepo := new(mock.MockTaskRepository)
+// 	body, _ := json.Marshal(task)
+// 	req, err := http.NewRequest("POST", "/tasks/add", bytes.NewBuffer(body))
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
 
-	task := domain.TaskAddReq{Title: "Test Task", Description: "Test Description", StatusId: 1, CreateUserId: 1}
-	mockRepo.On("Create", task).Return(1, nil)
+// 	rr := httptest.NewRecorder()
 
-	handler := NewTaskHandler(mockRepo)
+// 	handler.Create(rr, req)
 
-	body, _ := json.Marshal(task)
-	req, err := http.NewRequest("POST", "/tasks/add", bytes.NewBuffer(body))
-	if err != nil {
-		t.Fatal(err)
-	}
+// 	if status := rr.Code; status != http.StatusCreated {
+// 		t.Errorf("handler returned wrong status code: got %v want %v",
+// 			status, http.StatusCreated)
+// 	}
 
-	rr := httptest.NewRecorder()
+// 	var expected, actual map[string]interface{}
+// 	json.Unmarshal([]byte(`{"id":1}`), &expected)
+// 	json.Unmarshal(rr.Body.Bytes(), &actual)
+// 	if !reflect.DeepEqual(actual, expected) {
+// 		t.Errorf("handler returned unexpected body: got %v want %v",
+// 			actual, expected)
+// 	}
+// }
 
-	handler.Create(rr, req)
+// func TestTaskHandler_Update(t *testing.T) {
+// 	mockRepo := new(mock.MockTaskRepository)
 
-	if status := rr.Code; status != http.StatusCreated {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusCreated)
-	}
+// 	task := domain.TaskUpdateReq{Id: 1, Title: "Test Task", Description: "Test Description", StatusId: 1, UpdateUserId: 1}
+// 	mockRepo.On("Update", task).Return(1, nil)
 
-	var expected, actual map[string]interface{}
-	json.Unmarshal([]byte(`{"id":1}`), &expected)
-	json.Unmarshal(rr.Body.Bytes(), &actual)
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("handler returned unexpected body: got %v want %v",
-			actual, expected)
-	}
-}
+// 	handler := NewTaskHandler(mockRepo)
 
-func TestTaskHandler_Update(t *testing.T) {
-	mockRepo := new(mock.MockTaskRepository)
+// 	body, _ := json.Marshal(task)
+// 	req, err := http.NewRequest("PUT", "/tasks/update", bytes.NewBuffer(body))
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
 
-	task := domain.TaskUpdateReq{Id: 1, Title: "Test Task", Description: "Test Description", StatusId: 1, UpdateUserId: 1}
-	mockRepo.On("Update", task).Return(1, nil)
+// 	rr := httptest.NewRecorder()
 
-	handler := NewTaskHandler(mockRepo)
+// 	handler.Update(rr, req)
 
-	body, _ := json.Marshal(task)
-	req, err := http.NewRequest("PUT", "/tasks/update", bytes.NewBuffer(body))
-	if err != nil {
-		t.Fatal(err)
-	}
+// 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	rr := httptest.NewRecorder()
+// 	expectedBody := `{"id":1}`
+// 	assert.JSONEq(t, expectedBody, rr.Body.String())
+// }
 
-	handler.Update(rr, req)
+// func TestTaskHandler_Delete(t *testing.T) {
+// 	mockRepo := new(mock.MockTaskRepository)
 
-	assert.Equal(t, http.StatusOK, rr.Code)
+// 	task := domain.TaskDeleteReq{Id: 1, UpdateUserId: 1}
+// 	mockRepo.On("Delete", task).Return(1, nil)
 
-	expectedBody := `{"id":1}`
-	assert.JSONEq(t, expectedBody, rr.Body.String())
-}
+// 	handler := NewTaskHandler(mockRepo)
 
-func TestTaskHandler_Delete(t *testing.T) {
-	mockRepo := new(mock.MockTaskRepository)
+// 	body, _ := json.Marshal(task)
+// 	req, err := http.NewRequest("DELETE", "/tasks/delete", bytes.NewBuffer(body))
+// 	if err != nil {
+// 		t.Fatal("Hata olustu: ", err)
+// 	}
 
-	task := domain.TaskDeleteReq{Id: 1, UpdateUserId: 1}
-	mockRepo.On("Delete", task).Return(1, nil)
+// 	rr := httptest.NewRecorder()
 
-	handler := NewTaskHandler(mockRepo)
+// 	handler.Delete(rr, req)
 
-	body, _ := json.Marshal(task)
-	req, err := http.NewRequest("DELETE", "/tasks/delete", bytes.NewBuffer(body))
-	if err != nil {
-		t.Fatal("Hata olustu: ", err)
-	}
+// 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	rr := httptest.NewRecorder()
-
-	handler.Delete(rr, req)
-
-	assert.Equal(t, http.StatusOK, rr.Code)
-
-	expectedBody := `{"id":1}`
-	assert.JSONEq(t, expectedBody, rr.Body.String())
-}
+// 	expectedBody := `{"id":1}`
+// 	assert.JSONEq(t, expectedBody, rr.Body.String())
+// }

@@ -1,0 +1,218 @@
+info:
+  contact: {}
+paths:
+  /distribute-tasks:
+    get:
+      consumes:
+      - application/json
+      description: Distribute tasks to users
+      operationId: distribute-tasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Distribute tasks
+      tags:
+      - distribute-tasks
+  /tasks/add:
+    post:
+      consumes:
+      - application/json
+      description: Create a new task
+      operationId: create-task
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Create Task
+      tags:
+      - task-create
+  /tasks/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a task
+      operationId: delete-task
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Delete Task
+      tags:
+      - task-delete
+  /tasks/getAll:
+    get:
+      consumes:
+      - application/json
+      description: Get all tasks
+      operationId: get-all-tasks
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get All Tasks
+      tags:
+      - task-getAll
+  /tasks/getById:
+    get:
+      consumes:
+      - application/json
+      description: Get a task by ID
+      operationId: get-task-by-id
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get Task by ID
+      tags:
+      - task-getById
+  /tasks/update:
+    put:
+      consumes:
+      - application/json
+      description: Update a task
+      operationId: update-task
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Update Task
+      tags:
+      - task-update
+  /users/add:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      operationId: create-user
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Create User
+      tags:
+      - user-create
+  /users/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user
+      operationId: delete-user
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Delete User
+      tags:
+      - user-delete
+  /users/getAll:
+    get:
+      consumes:
+      - application/json
+      description: Get all users
+      operationId: get-all-users
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get All Users
+      tags:
+      - user-getAll
+  /users/getById:
+    get:
+      consumes:
+      - application/json
+      description: Get a user by id
+      operationId: get-user-by-id
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get User By Id
+      tags:
+      - user-get
+  /users/update:
+    put:
+      consumes:
+      - application/json
+      description: Update a user
+      operationId: update-user
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Update User
+      tags:
+      - user-update
+swagger: "2.0"

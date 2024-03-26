@@ -1,11 +1,5 @@
 package domain
 
-// type User struct {
-// 	Id    int
-// 	Name  string
-// 	Tasks []Task
-// }
-
 type UserAddReq struct {
 	FirstName    string
 	LastName     string
@@ -43,9 +37,11 @@ type UserGetAllResp struct {
 }
 
 type UserGetDataList struct {
-	Id        int
-	FirstName string
-	LastName  string
-	Email     string
-	CreatedAt string
+	Id                          int
+	FirstName                   string
+	LastName                    string
+	Email                       string
+	Name                        string
+	DeveloperWorkHourDifficulty int
+	CreatedAt                   string
 }

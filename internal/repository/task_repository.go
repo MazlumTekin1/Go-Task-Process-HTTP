@@ -94,10 +94,10 @@ func (pg *TaskRepositoryImpl) GetById(task domain.TaskGetByIdReq) (domain.TaskGe
 	res := domain.TaskGetDataList{}
 	var createdAt time.Time
 	qInsert := `SELECT 
-	main.id, main.title, main.description, main.status_id, ts.task_statu, main.created_at
+	main.id, main.title, main.description, main.status_id, ts.task_statu, main.created_at, main.difficulty 
 	FROM test.tasks main
 	inner join test.task_status as ts
-	on test.tasks.status_id = test.task_status.id
+	on main.status_id = ts.id
 	where main.is_deleted = false and main.id = $1`
 	err := pg.db.QueryRow(context.Background(), qInsert, task.Id).Scan(
 		&res.Id,
@@ -106,6 +106,7 @@ func (pg *TaskRepositoryImpl) GetById(task domain.TaskGetByIdReq) (domain.TaskGe
 		&res.StatusId,
 		&res.Status,
 		&createdAt,
+		&res.Difficulty,
 	)
 	if err != nil {
 		return res, domain.NewDatabaseError("TaskRepositoryImpl.GetById", err)
@@ -119,11 +120,11 @@ func (pg *TaskRepositoryImpl) GetAll() ([]domain.TaskGetDataList, error) {
 	res := []domain.TaskGetDataList{}
 	var createdAt time.Time
 	qInsert := `SELECT 
-	main.id, main.title, main.description, main.status_id, ts.task_statu, main.created_at
+	main.id, main.title, main.description, main.status_id, ts.task_statu, main.created_at, main.difficulty 
 	FROM test.tasks main
 	inner join test.task_status as ts
-	on test.tasks.status_id = test.task_status.id
-	where is_deleted = false
+	on main.status_id = ts.id
+	where main.is_deleted = false
 	order by id desc;`
 	rows, err := pg.db.Query(context.Background(), qInsert)
 
@@ -141,6 +142,7 @@ func (pg *TaskRepositoryImpl) GetAll() ([]domain.TaskGetDataList, error) {
 			&row.StatusId,
 			&row.Status,
 			&createdAt,
+			&row.Difficulty,
 		)
 		if err != nil {
 			return res, domain.NewDatabaseError("TaskRepositoryImpl.GetAll", err)
