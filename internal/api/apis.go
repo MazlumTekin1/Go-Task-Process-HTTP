@@ -11,13 +11,16 @@ import (
 )
 
 func StartServer() {
+	authService := service.NewAuthService(repository.NewAuthRepository(db.Connection))
 	taskService := service.NewTaskService(repository.NewTaskRepository(db.Connection))
 	userService := service.NewUserService(repository.NewUserRepository(db.Connection))
 	http.Handle("/swagger/", httpSwagger.WrapHandler)
+
 	distributeTasksHandler := handler.NewDistributeTasksHandler(taskService, userService)
 
 	http.HandleFunc("/distributeTasks", distributeTasksHandler.DistributeTasks)
 	setupTaskRoutes(taskService)
+	setupAuthRoutes(authService)
 	setupUserRoutes(userService)
 
 	http.ListenAndServe(":8080", nil)

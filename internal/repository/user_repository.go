@@ -2,6 +2,9 @@ package repository
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
+	"log"
 	"time"
 
 	"task-process-service/internal/domain"
@@ -29,14 +32,20 @@ func (pg *UserRepositoryImpl) Create(User domain.UserAddReq) (int, error) {
 	createDate := time.Now().Format("2006-01-02 15:04:05")
 	var id int
 
+	h := sha256.New()
+	_, err := h.Write([]byte(User.Password))
+	if err != nil {
+		log.Println("user_repository.go -> UserCreate -> hash error: ", err)
+	}
+	passwordHash := hex.EncodeToString(h.Sum(nil))
 	qInsert := `insert into test.users (first_name, last_name, email, password, created_at, create_user_id)
     values($1, $2, $3, $4, $5, $6)
 	returning id;`
-	err := pg.db.QueryRow(context.Background(), qInsert,
+	err = pg.db.QueryRow(context.Background(), qInsert,
 		User.FirstName,
 		User.LastName,
 		User.Email,
-		User.Password,
+		passwordHash,
 		&createDate,
 		User.CreateUserId,
 	).Scan(&id)
@@ -52,15 +61,14 @@ func (pg *UserRepositoryImpl) Update(User domain.UserUpdateReq) (int, error) {
 	var id int
 
 	qInsert := `UPDATE test.users
-	SET first_name=$1, last_name=$2, email=$3, "password"=$4, 
-	updated_at=$5, update_user_id=$6
-	where id = $7
+	SET first_name=$1, last_name=$2, email=$3,  
+	updated_at=$4, update_user_id=$5
+	where id = $6 and is_deleted = false
 	returning id;`
 	err := pg.db.QueryRow(context.Background(), qInsert,
 		User.FirstName,
 		User.LastName,
 		User.Email,
-		User.Password,
 		&updateDate,
 		User.UpdateUserId,
 		User.Id,
