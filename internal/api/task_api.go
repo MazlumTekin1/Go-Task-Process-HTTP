@@ -6,11 +6,11 @@ import (
 	"task-process-service/internal/service"
 )
 
-func setupTaskRoutes(s service.TaskService) {
+func setupTaskRoutes(s service.TaskService, authMiddleware func(http.HandlerFunc) http.HandlerFunc) {
 	taskHandler := handler.NewTaskHandler(s)
-	http.HandleFunc("/tasks/add", taskHandler.Create)
-	http.HandleFunc("/tasks/update", taskHandler.Update)
-	http.HandleFunc("/tasks/delete", taskHandler.Delete)
-	http.HandleFunc("/tasks/getById", taskHandler.GetById)
-	http.HandleFunc("/tasks/getAll", taskHandler.GetAll)
+	http.HandleFunc("/tasks/add", authMiddleware(taskHandler.Create))
+	http.HandleFunc("/tasks/update", authMiddleware(taskHandler.Update))
+	http.HandleFunc("/tasks/delete", authMiddleware(taskHandler.Delete))
+	http.HandleFunc("/tasks/getById", authMiddleware(taskHandler.GetById))
+	http.HandleFunc("/tasks/getAll", authMiddleware(taskHandler.GetAll))
 }

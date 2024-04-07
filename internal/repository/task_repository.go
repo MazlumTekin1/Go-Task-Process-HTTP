@@ -29,8 +29,8 @@ func (pg *TaskRepositoryImpl) Create(task domain.TaskAddReq) (int, error) {
 	createDate := time.Now().Format("2006-01-02 15:04:05")
 	var id int
 
-	qInsert := `insert into test.tasks (title, description, status_id, created_at, create_user_id)
-    values($1, $2, $3, $4, $5)
+	qInsert := `insert into test.tasks (title, description, status_id, created_at, create_user_id, difficulty, duration)
+    values($1, $2, $3, $4, $5, $6, $7)
 	returning id;`
 	err := pg.db.QueryRow(context.Background(), qInsert,
 		task.Title,
@@ -38,6 +38,8 @@ func (pg *TaskRepositoryImpl) Create(task domain.TaskAddReq) (int, error) {
 		task.StatusId,
 		&createDate,
 		task.CreateUserId,
+		task.Difficulty,
+		task.Duration,
 	).Scan(&id)
 	if err != nil {
 		return 0, domain.NewDatabaseError("TaskRepositoryImpl.Create", err)
@@ -52,8 +54,8 @@ func (pg *TaskRepositoryImpl) Update(task domain.TaskUpdateReq) (int, error) {
 
 	qInsert := `UPDATE test.tasks
 	SET title=$1, description=$2, status_id=$3, updated_at=$4, 
-	update_user_id=$5
-	where id = $6
+	update_user_id=$5, difficulty=$6, duration=$7
+	where id = $8
 	returning id;`
 	err := pg.db.QueryRow(context.Background(), qInsert,
 		task.Title,
@@ -61,6 +63,8 @@ func (pg *TaskRepositoryImpl) Update(task domain.TaskUpdateReq) (int, error) {
 		task.StatusId,
 		&updateDate,
 		task.UpdateUserId,
+		task.Difficulty,
+		task.Duration,
 		task.Id,
 	).Scan(&id)
 	if err != nil {
@@ -70,6 +74,7 @@ func (pg *TaskRepositoryImpl) Update(task domain.TaskUpdateReq) (int, error) {
 	return id, nil
 }
 
+// in this project we are not deleting the user, we are just updating the is_deleted column to true
 func (pg *TaskRepositoryImpl) Delete(task domain.TaskDeleteReq) (int, error) {
 	DeleteDate := time.Now().Format("2006-01-02 15:04:05")
 	var id int
@@ -94,7 +99,7 @@ func (pg *TaskRepositoryImpl) GetById(task domain.TaskGetByIdReq) (domain.TaskGe
 	res := domain.TaskGetDataList{}
 	var createdAt time.Time
 	qInsert := `SELECT 
-	main.id, main.title, main.description, main.status_id, ts.task_statu, main.created_at, main.difficulty 
+	main.id, main.title, main.description, main.status_id, ts.task_statu, main.created_at, main.difficulty, main.duration
 	FROM test.tasks main
 	inner join test.task_status as ts
 	on main.status_id = ts.id
@@ -107,6 +112,7 @@ func (pg *TaskRepositoryImpl) GetById(task domain.TaskGetByIdReq) (domain.TaskGe
 		&res.Status,
 		&createdAt,
 		&res.Difficulty,
+		&res.Duration,
 	)
 	if err != nil {
 		return res, domain.NewDatabaseError("TaskRepositoryImpl.GetById", err)
@@ -120,7 +126,7 @@ func (pg *TaskRepositoryImpl) GetAll() ([]domain.TaskGetDataList, error) {
 	res := []domain.TaskGetDataList{}
 	var createdAt time.Time
 	qInsert := `SELECT 
-	main.id, main.title, main.description, main.status_id, ts.task_statu, main.created_at, main.difficulty 
+	main.id, main.title, main.description, main.status_id, ts.task_statu, main.created_at, main.difficulty, main.duration
 	FROM test.tasks main
 	inner join test.task_status as ts
 	on main.status_id = ts.id
@@ -143,6 +149,7 @@ func (pg *TaskRepositoryImpl) GetAll() ([]domain.TaskGetDataList, error) {
 			&row.Status,
 			&createdAt,
 			&row.Difficulty,
+			&row.Duration,
 		)
 		if err != nil {
 			return res, domain.NewDatabaseError("TaskRepositoryImpl.GetAll", err)

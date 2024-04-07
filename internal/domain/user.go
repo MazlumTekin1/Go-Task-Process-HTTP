@@ -1,29 +1,30 @@
 package domain
 
 type UserAddReq struct {
-	FirstName    string
-	LastName     string
-	Email        string
-	Password     string
-	CreateUserId int
+	FirstName                   string `json:"firstName"`
+	LastName                    string `json:"lastName"`
+	Email                       string `json:"email"`
+	Password                    string `json:"password"`
+	DeveloperWorkHourDifficulty int    `json:"developerLevel"`
+	CreateUserId                int    `json:"createUserId"`
 }
 
 type UserUpdateReq struct {
-	Id           int
-	FirstName    string
-	LastName     string
-	Email        string
-	Password     string
-	UpdateUserId int
+	Id                          int    `json:"id"`
+	FirstName                   string `json:"firstName"`
+	LastName                    string `json:"lastName"`
+	Email                       string `json:"email"`
+	DeveloperWorkHourDifficulty int    `json:"developerLevel"`
+	UpdateUserId                int    `json:"updateUserId"`
 }
 
 type UserDeleteReq struct {
-	Id           int
-	UpdateUserId int
+	Id           int `json:"id"`
+	UpdateUserId int `json:"updateUserId"`
 }
 
 type UserGetByIdReq struct {
-	Id int
+	Id int `json:"id"`
 }
 
 type UserGetResp struct {

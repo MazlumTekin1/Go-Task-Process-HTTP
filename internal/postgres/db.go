@@ -11,10 +11,9 @@ import (
 
 var Connection *pgxpool.Pool
 
-func Initialize() {
+func Initialize(absPath string) {
 
-	configPath := "./config.json"
-	cfg, err := LoadConfig(configPath)
+	cfg, err := LoadConfig(absPath)
 	if err != nil {
 		log.Fatalf("Konfigurasyon dosyasini yuklerken hata olustu: %v", err)
 	}

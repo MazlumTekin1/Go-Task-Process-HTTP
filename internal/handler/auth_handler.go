@@ -31,20 +31,10 @@ func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	if resLogin.IsValid {
 		json.NewEncoder(w).Encode(resLogin)
 	} else {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 	}
-	/*
-		if isValid {
-			log.Println("User is valid, generating token")
-			token := handler.AuthService.GenerateToken(req.Email, id)
-			// token := strconv.Itoa(id)
-			w.Write([]byte(token))
-		} else {
-			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte("Invalid credentials"))
-		}
-	*/
 }

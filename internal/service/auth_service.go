@@ -3,7 +3,6 @@ package service
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"fmt"
 	"log"
 	"strconv"
 	"task-process-service/internal/domain"
@@ -21,7 +20,6 @@ type User struct {
 type AuthService interface {
 	LoginService(req domain.LoginRequest) (domain.LoginResponse, error)
 	GenerateToken(email string, id int) (string, int)
-	ValidateToken(encodedToken string) (*jwt.Token, error)
 }
 
 type authService struct {
@@ -63,18 +61,6 @@ type authCustomClaims struct {
 	jwt.StandardClaims
 }
 
-//type jwtServices struct {
-//secretKey string
-//	issure    string
-//}
-
-// func NewJWTAuthService() JWTService {
-// 	return &jwtServices{
-// 		secretKey: "secretKey",
-// 		issure:    "test.com",
-// 	}
-// }
-
 func (s *authService) GenerateHashPassword(password string) string {
 	h := sha256.New()
 	_, err := h.Write([]byte(password))
@@ -86,7 +72,7 @@ func (s *authService) GenerateHashPassword(password string) string {
 }
 
 func (s *authService) GenerateToken(email string, id int) (string, int) {
-	secretKey := "secretKey"
+	secretKey := "simdi-secret-key-belirleme-zamani:)"
 	claims := &authCustomClaims{
 		email,
 		jwt.StandardClaims{
@@ -101,18 +87,4 @@ func (s *authService) GenerateToken(email string, id int) (string, int) {
 	}
 
 	return newToken, 3600
-}
-
-func (s *authService) ValidateToken(encodedToken string) (*jwt.Token, error) {
-	secretKey := "secretKey"
-	return jwt.ParseWithClaims(
-		encodedToken,
-		&authCustomClaims{},
-		func(token *jwt.Token) (interface{}, error) {
-			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-			}
-			return []byte(secretKey), nil
-		},
-	)
 }

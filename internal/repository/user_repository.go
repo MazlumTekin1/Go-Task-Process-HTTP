@@ -38,8 +38,8 @@ func (pg *UserRepositoryImpl) Create(User domain.UserAddReq) (int, error) {
 		log.Println("user_repository.go -> UserCreate -> hash error: ", err)
 	}
 	passwordHash := hex.EncodeToString(h.Sum(nil))
-	qInsert := `insert into test.users (first_name, last_name, email, password, created_at, create_user_id)
-    values($1, $2, $3, $4, $5, $6)
+	qInsert := `insert into test.users (first_name, last_name, email, password, created_at, create_user_id, user_level)
+    values($1, $2, $3, $4, $5, $6, $7)
 	returning id;`
 	err = pg.db.QueryRow(context.Background(), qInsert,
 		User.FirstName,
@@ -48,6 +48,7 @@ func (pg *UserRepositoryImpl) Create(User domain.UserAddReq) (int, error) {
 		passwordHash,
 		&createDate,
 		User.CreateUserId,
+		User.DeveloperWorkHourDifficulty,
 	).Scan(&id)
 	if err != nil {
 		return 0, domain.NewDatabaseError("UserRepositoryImpl.Create", err)
@@ -62,8 +63,8 @@ func (pg *UserRepositoryImpl) Update(User domain.UserUpdateReq) (int, error) {
 
 	qInsert := `UPDATE test.users
 	SET first_name=$1, last_name=$2, email=$3,  
-	updated_at=$4, update_user_id=$5
-	where id = $6 and is_deleted = false
+	updated_at=$4, update_user_id=$5, user_level=$6
+	where id = $7 and is_deleted = false
 	returning id;`
 	err := pg.db.QueryRow(context.Background(), qInsert,
 		User.FirstName,
@@ -71,6 +72,7 @@ func (pg *UserRepositoryImpl) Update(User domain.UserUpdateReq) (int, error) {
 		User.Email,
 		&updateDate,
 		User.UpdateUserId,
+		User.DeveloperWorkHourDifficulty,
 		User.Id,
 	).Scan(&id)
 	if err != nil {
@@ -80,6 +82,7 @@ func (pg *UserRepositoryImpl) Update(User domain.UserUpdateReq) (int, error) {
 	return id, nil
 }
 
+// in this project we are not deleting the user, we are just updating the is_deleted column to true
 func (pg *UserRepositoryImpl) Delete(User domain.UserDeleteReq) (int, error) {
 	DeleteDate := time.Now().Format("2006-01-02 15:04:05")
 	var id int

@@ -6,10 +6,10 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	IsValid    bool   `json:"isValid"`
-	UserId     int    `json:"userId"`
-	Token      string `json:"token"`
-	ExpireTime string `json:"expireTime"`
+	IsValid    bool
+	UserId     int
+	Token      string
+	ExpireTime string
 }
 
 type CheckUserResponse struct {
