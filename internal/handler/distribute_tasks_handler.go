@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"task-process-service/internal/domain"
 	"task-process-service/internal/service"
+
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 type DistributeTasksHandler struct {
@@ -17,6 +19,17 @@ func NewDistributeTasksHandler(sTask service.TaskService, sUser service.UserServ
 		sTask: sTask,
 		sUser: sUser,
 	}
+}
+
+var (
+	tasksDistributed = prometheus.NewCounter(prometheus.CounterOpts{
+		Name: "tasks_distributed_total",
+		Help: "The total number of tasks distributed",
+	})
+)
+
+func init() {
+	prometheus.MustRegister(tasksDistributed)
 }
 
 func (h DistributeTasksHandler) DistributeTasks(w http.ResponseWriter, r *http.Request) {
@@ -60,6 +73,9 @@ func (h DistributeTasksHandler) DistributeTasks(w http.ResponseWriter, r *http.R
 		"data":     data,
 		"maxWeeks": maxWeeks,
 	}
+
+	tasksDistributed.Inc()
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(result)

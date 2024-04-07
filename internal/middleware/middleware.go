@@ -1,10 +1,26 @@
 package middleware
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
+	"sync"
 	"task-process-service/internal/service"
+	"time"
 )
+
+type visitor struct {
+	lastSeen time.Time
+	visits   int
+}
+
+var visitors = make(map[string]*visitor)
+var mtx sync.Mutex
+
+type MiddlewareInterface interface {
+	AuthMiddleware(next http.HandlerFunc) http.HandlerFunc
+	RateLimit(next http.HandlerFunc) http.HandlerFunc
+}
 
 func AuthMiddleware(jwtService service.JWTService) func(http.HandlerFunc) http.HandlerFunc {
 	return func(next http.HandlerFunc) http.HandlerFunc {
@@ -38,28 +54,28 @@ func AuthMiddleware(jwtService service.JWTService) func(http.HandlerFunc) http.H
 	}
 }
 
-/*
-func AuthMiddleware(jwtService service.JWTService) func(http.Handler) http.Handler {
-	return func(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			authHeader := r.Header.Get("Authorization")
-			if authHeader != "" {
-				bearerToken := strings.Split(authHeader, " ")
-				if len(bearerToken) == 2 {
-					token, err := jwtService.ValidateToken(bearerToken[1])
-					if token.Valid {
-						next.ServeHTTP(w, r)
-					} else {
-						w.WriteHeader(http.StatusUnauthorized)
-						w.Write([]byte(err.Error()))
-						return
-					}
-				}
-			} else {
-				w.WriteHeader(http.StatusUnauthorized)
+func RateLimit(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		mtx.Lock()
+		defer mtx.Unlock()
+
+		visitorIP := r.RemoteAddr
+		v, exists := visitors[visitorIP]
+		if !exists {
+			visitors[visitorIP] = &visitor{time.Now(), 1}
+		} else if time.Since(v.lastSeen) > 1*time.Minute {
+			v.lastSeen = time.Now()
+			v.visits = 1
+		} else {
+			v.visits++
+			if v.visits > 10 {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusTooManyRequests)
+				json.NewEncoder(w).Encode(map[string]string{"error": "You have reached maximum request limit."})
 				return
 			}
-		})
+		}
+
+		next.ServeHTTP(w, r)
 	}
 }
-*/
