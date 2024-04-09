@@ -1,5 +1,8 @@
 # Go Task Process Net/Http
 
+# Uyarı: Şu anda Swagger ile ilgili ufak bir sıkıntı var. Yakında çözülecek. Eğer bu süre zarfı içinde bakıyorsanız internal/sql klasöründeki Go-Task-Project-Http-Postman-Collection.json collection'u import edebilirsiniz.
+# Warning: There is a slight issue with Swagger right now. It will be resolved soon
+
 ## Getting Started
 
 - I built the project on Hexagonal Architecture. 
@@ -40,6 +43,10 @@ A step by step series of examples that tell you how to get a development environ
 2. Run `go mod download` to download dependencies
 3. For database connection, you need to replace the /internal/config.json file with your own PostgreSQL database information.
 4. You need to run DDL commands in the /internal/sql folder. Or you can import the dump file below
+5. go to root project directory
+6. cd cmd
+7. go run main.go
+
 
 ## Running the tests
 

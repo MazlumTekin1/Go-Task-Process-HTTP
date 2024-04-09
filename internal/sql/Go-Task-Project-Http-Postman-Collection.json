@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "2fb46eb9-ead7-4544-acd8-53ff4184c7f7",
+		"name": "My Projects",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26727304"
+	},
+	"item": [
+		{
+			"name": "Hexagonal Arthitecture Project",
+			"item": [
+				{
+					"name": "Task",
+					"item": [
+						{
+							"name": "/tasks/add",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Test Task1\",\r\n    \"description\": \"Test Task1 Description\",\r\n    \"duration\": 5,\r\n    \"statusId\": 3,\r\n    \"difficulty\": 1,\r\n    \"createUserId\": 318836 \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/tasks/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"tasks",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/tasks/update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 12,\r\n    \"title\": \"Server Kurulumu\",\r\n    \"description\": \"Server Kurulumu Description\",\r\n    \"duration\": 7,\r\n    \"statusId\": 4,\r\n    \"difficulty\": 2,\r\n    \"updateUserId\": 318836 \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/tasks/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"tasks",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/tasks/delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 12,\r\n    \"UpdateUserId\": 318836 \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/tasks/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"tasks",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/tasks/getById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 12\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/tasks/getById",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"tasks",
+										"getById"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/tasks/getAll",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/tasks/getAll",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"tasks",
+										"getAll"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "/users/add",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Ahmet\",\r\n    \"lastName\": \"Yılmaz\",\r\n    \"email\": \"ahmet.yilmaz@gmail.com\",\r\n    \"password\": \"212312\",\r\n    \"developerLevel\": 3,\r\n    \"createUserId\": 318836\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/users/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"users",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/users/update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 14,\r\n    \"firstName\": \"Ahmet\",\r\n    \"lastName\": \"Yılmaz\",\r\n    \"email\": \"ahmet.yilmaz@gmail.com\",\r\n    \"developerLevel\": 4,\r\n    \"updateUserId\": 318836 \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/users/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"users",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/users/delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 14,\r\n    \"UpdateUserId\": 318836 \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/users/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"users",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/users/getById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 14\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/users/getById",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"users",
+										"getById"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/users/getAll",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/users/getAll",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"users",
+										"getAll"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Distribute Tasks",
+					"item": [
+						{
+							"name": "New Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hemx1bXRla2luLmthcml5ZXJAZ21haWwuY29tIiwiZXhwIjoxNzEyNjkxNjgzfQ.L4fuHrftLxJF-wyzGqjuOz9sranDQ3SKjiEp2hE-3B4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:45009/distributeTasks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"distributeTasks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "/login",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"mazlumtekin.kariyer@gmail.com\",\r\n    \"Password\": \"12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:45009/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "45009",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
