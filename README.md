@@ -1,7 +1,7 @@
 # Go Task Process Net/Http
 
-# Uyarı: Şu anda Swagger ile ilgili ufak bir sıkıntı var. Yakında çözülecek. Eğer bu süre zarfı içinde bakıyorsanız internal/sql klasöründeki Go-Task-Project-Http-Postman-Collection.json collection'u import edebilirsiniz.
-# Warning: There is a slight issue with Swagger right now. It will be resolved soon
+## Uyarı: Şu anda Swagger ile ilgili ufak bir sıkıntı var. Yakında çözülecek. Eğer bu süre zarfı içinde bakıyorsanız internal/sql klasöründeki Go-Task-Project-Http-Postman-Collection.json collection'u import edebilirsiniz.
+## Warning: There is a slight issue with Swagger right now. It will be resolved soon
 
 ## Getting Started
 
