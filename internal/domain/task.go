@@ -28,6 +28,7 @@ type TaskGetByIdReq struct {
 	Id int `json:"id"`
 }
 
+// swagger:response taskGetResponse
 type TaskGetResp struct {
 	Status string
 	Result UserGetDataList
