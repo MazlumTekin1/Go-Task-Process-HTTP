@@ -13,17 +13,16 @@ import (
 )
 
 func StartServer() {
-
 	jwtService := service.NewJWTAuthService()
-
 	authMiddleware := middleware.AuthMiddleware(*jwtService)
-	http.Handle("/metrics", promhttp.Handler())
 	authService := service.NewAuthService(repository.NewAuthRepository(db.Connection))
 	taskService := service.NewTaskService(repository.NewTaskRepository(db.Connection))
 	userService := service.NewUserService(repository.NewUserRepository(db.Connection))
-	http.Handle("/swagger/", httpSwagger.WrapHandler)
-
 	distributeTasksHandler := handler.NewDistributeTasksHandler(taskService, userService)
+
+	http.Handle("/metrics", promhttp.Handler())
+
+	http.Handle("/swagger/", httpSwagger.WrapHandler)
 
 	http.HandleFunc("/distributeTasks", authMiddleware(middleware.RateLimit(distributeTasksHandler.DistributeTasks)))
 	setupTaskRoutes(taskService, authMiddleware, middleware.RateLimit)

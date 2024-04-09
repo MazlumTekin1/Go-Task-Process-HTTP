@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"task-process-service/internal/domain"
+	m "task-process-service/internal/monitoring"
+
 	"task-process-service/internal/service"
 )
 
@@ -15,6 +17,15 @@ func NewTaskHandler(service service.TaskService) TaskHandler {
 	return TaskHandler{service: service}
 }
 
+// @Summary User Create
+// @Description Create a new user
+// @Tags users/create
+// @ID create-user
+// @Accept  json
+// @Produce  json
+// @Param createUser body domain.TaskAddReq
+// @Success 201 {object} {id: int}
+// @Router /users/create [post]
 func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -32,6 +43,7 @@ func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	m.TaskCreate.Inc()
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
@@ -54,6 +66,7 @@ func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	m.TaskUpdate.Inc()
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
@@ -76,6 +89,7 @@ func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	m.TaskDelete.Inc()
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
@@ -98,6 +112,7 @@ func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	m.TaskGetById.Inc()
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(user)
@@ -114,7 +129,7 @@ func (h TaskHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	m.TaskGetAll.Inc()
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(users)

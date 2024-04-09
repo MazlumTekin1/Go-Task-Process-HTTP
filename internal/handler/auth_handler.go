@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"task-process-service/internal/domain"
+	m "task-process-service/internal/monitoring"
 	"task-process-service/internal/service"
 )
 
@@ -31,6 +32,7 @@ func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	m.Login.Inc()
 	w.Header().Set("Content-Type", "application/json")
 	if resLogin.IsValid {
 		json.NewEncoder(w).Encode(resLogin)
