@@ -1,15 +1,13 @@
-# Project Title
-
-Go Task Process Net/Http
+# Go Task Process Net/Http
 
 ## Getting Started
 
 - I built the project on Hexagonal Architecture. 
-Inside the Internal folder is the API folder with the request ends,
-Handler folder that receives the incoming request,
-Service folder with business rules,
-Repository folder for database operations,
-Reque
+- Inside the Internal folder is the API folder with the request ends,
+- Handler folder that receives the incoming request,
+- Service folder with business rules,
+- Repository folder for database operations,
+- There is a Domain folder for the Model structures of Request and Response operations.
 
 - In this project, all CRUD operations of Users and Tasks are prepared and a system that calculates the number of Tasks that Users can get per week is designed.
 - You need to pass JWT authentication from /login in order to send requests to the request ends. There is a JWT token query on all existing request ends except login. If there is no token or if it is not passed, the request will not be made.
@@ -31,8 +29,8 @@ Reque
 
 What things you need to install the software and how to install them.
 
-- Go version (e.g., 1.16)
-- Docker (if applicable)
+- Go version (after 1.20)
+- Docker
 
 ### Installing
 
