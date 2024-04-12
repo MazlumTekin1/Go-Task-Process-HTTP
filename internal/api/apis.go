@@ -8,11 +8,12 @@ import (
 	"task-process-service/internal/repository"
 	"task-process-service/internal/service"
 
+	"github.com/go-chi/chi"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	httpSwagger "github.com/swaggo/http-swagger"
+	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
 )
 
-func StartServer() {
+func StartServer(r *chi.Mux) {
 	jwtService := service.NewJWTAuthService()
 	authMiddleware := middleware.AuthMiddleware(*jwtService)
 	authService := service.NewAuthService(repository.NewAuthRepository(db.Connection))
@@ -20,14 +21,12 @@ func StartServer() {
 	userService := service.NewUserService(repository.NewUserRepository(db.Connection))
 	distributeTasksHandler := handler.NewDistributeTasksHandler(taskService, userService)
 
-	http.Handle("/metrics", promhttp.Handler())
+	r.Handle("/metrics", promhttp.Handler())
 
-	http.Handle("/swagger/", httpSwagger.WrapHandler)
+	r.HandleFunc("/distributeTasks", authMiddleware(middleware.RateLimit(distributeTasksHandler.DistributeTasks)))
+	setupTaskRoutes(r, taskService, authMiddleware, middleware.RateLimit)
+	setupAuthRoutes(r, authService)
+	setupUserRoutes(r, userService, authMiddleware, middleware.RateLimit)
 
-	http.HandleFunc("/distributeTasks", authMiddleware(middleware.RateLimit(distributeTasksHandler.DistributeTasks)))
-	setupTaskRoutes(taskService, authMiddleware, middleware.RateLimit)
-	setupAuthRoutes(authService)
-	setupUserRoutes(userService, authMiddleware, middleware.RateLimit)
-
-	http.ListenAndServe(":45009", nil)
+	http.ListenAndServe(":45009", r)
 }

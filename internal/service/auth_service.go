@@ -72,7 +72,7 @@ func (s *authService) GenerateHashPassword(password string) string {
 }
 
 func (s *authService) GenerateToken(email string, id int) (string, int) {
-	secretKey := "simdi-secret-key-belirleme-zamani:)"
+	secretKey := "go_task_process_service_secret_key"
 	claims := &authCustomClaims{
 		email,
 		jwt.StandardClaims{

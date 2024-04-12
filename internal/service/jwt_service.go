@@ -14,7 +14,7 @@ type JWTService struct {
 
 func NewJWTAuthService() *JWTService {
 	return &JWTService{
-		secretKey: "simdi-secret-key-belirleme-zamani:)",
+		secretKey: "go_task_process_service_secret_key",
 		repo:      repository.NewUserRepository(nil),
 	}
 }

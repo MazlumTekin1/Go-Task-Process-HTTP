@@ -16,14 +16,17 @@ func NewUserHandler(ser service.UserService) UserHandler {
 	return UserHandler{service: ser}
 }
 
-// @Summary Create user
-// @Description Create a new user
+// @Summary Add a new user
+// @Description Adds a new user to the user list
 // @Tags users
+// @ID add-user
 // @Accept  json
 // @Produce  json
-// @Param user body domain.UserAddReq true "Create user"
-// @Success 201 {object} domain.UserAddReq
-// @Router /users [post]
+// @Param user body domain.UserAddReq true "User Add to Database"
+// @Success 201 {object} map[string]int
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /users/add [post]
 func (h UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -47,6 +50,17 @@ func (h UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }
 
+// @Summary Update a user
+// @Description Update a user
+// @Tags users/update
+// @ID update-user
+// @Accept  json
+// @Produce  json
+// @Param user body domain.UserUpdateReq true "User object"
+// @Success 200 {object} map[string]int
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /users/update [put]
 func (h UserHandler) Update(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -70,6 +84,17 @@ func (h UserHandler) Update(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }
 
+// @Summary Delete a user
+// @Description Delete a user
+// @Tags users/delete
+// @ID delete-user
+// @Accept  json
+// @Produce  json
+// @Param user body domain.UserDeleteReq true "User object"
+// @Success 200 {object} map[string]int
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /users/delete [delete]
 func (h UserHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -93,6 +118,17 @@ func (h UserHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }
 
+// @Summary Get user by ID
+// @Description Get user by ID
+// @Tags users/getById
+// @ID get-user
+// @Accept  json
+// @Produce  json
+// @Param user body domain.UserGetByIdReq true "User object"
+// @Success 200 {object} domain.UserGetDataList
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /users/getById [get]
 func (h UserHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -116,6 +152,16 @@ func (h UserHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
+// @Summary Get all users
+// @Description Get all users
+// @Tags users/getAll
+// @ID get-all-users
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} []domain.UserGetDataList
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /users/getAll [get]
 func (h UserHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)

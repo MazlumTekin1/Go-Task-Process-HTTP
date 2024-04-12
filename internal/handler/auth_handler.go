@@ -18,6 +18,17 @@ func NewAuthHandler(service service.AuthService) AuthHandler {
 	return AuthHandler{AuthService: service}
 }
 
+// @Summary Login
+// @Description Login to the application
+// @Tags auth
+// @ID login
+// @Accept  json
+// @Produce  json
+// @Param login body domain.LoginRequest true "Login Request"
+// @Success 200 {object} domain.LoginResponse
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /login [post]
 func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 
 	var req domain.LoginRequest

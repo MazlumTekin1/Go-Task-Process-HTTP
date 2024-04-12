@@ -12,7 +12,7 @@ func DistributeTasks(developers []domain.UserGetDataList, tasks []domain.TaskGet
 
 	developerWorkloads := make(map[string]float64)
 	for _, dev := range developers {
-		developerWorkloads[dev.Name] = 0
+		developerWorkloads[dev.FirstName] = 0
 	}
 
 	taskDistribution := make(map[string][]domain.TaskGetDataList)
@@ -24,10 +24,10 @@ func DistributeTasks(developers []domain.UserGetDataList, tasks []domain.TaskGet
 		minExtraTime := float64(999999)
 		for _, dev := range developers {
 			if float64(task.Difficulty) <= float64(dev.DeveloperWorkHourDifficulty) {
-				extraTime := developerWorkloads[dev.Name] + float64(task.Duration)
+				extraTime := developerWorkloads[dev.FirstName] + float64(task.Duration)
 				if extraTime < minExtraTime {
 					minExtraTime = extraTime
-					bestDev = dev.Name
+					bestDev = dev.FirstName
 				}
 			}
 		}

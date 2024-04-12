@@ -42,7 +42,6 @@ type UserGetDataList struct {
 	FirstName                   string
 	LastName                    string
 	Email                       string
-	Name                        string
 	DeveloperWorkHourDifficulty int
 	CreatedAt                   string
 }

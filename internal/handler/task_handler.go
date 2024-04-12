@@ -17,15 +17,17 @@ func NewTaskHandler(service service.TaskService) TaskHandler {
 	return TaskHandler{service: service}
 }
 
-// @Summary task Create
-// @Description Create a new task
-// @Tags tasks/create
-// @ID create-task
+// @Summary Add a new task
+// @Description Adds a new task to the task list
+// @Tags tasks
+// @ID add-task
 // @Accept  json
 // @Produce  json
-// @Param createtask body domain.TaskAddReq
-// @Success 201 {object} {id: int}
-// @Router /tasks/create [post]
+// @Param task body domain.TaskAddReq true "Task Add to Database"
+// @Success 201 {object} map[string]int
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /tasks/add [post]
 func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -49,6 +51,17 @@ func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }
 
+// @Summary task Update
+// @Description Update a task
+// @Tags tasks/update
+// @ID update-task
+// @Accept  json
+// @Produce  json
+// @Param task body domain.TaskUpdateReq true "Task object"
+// @Success 200 {object} map[string]int
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /tasks/update [put]
 func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -72,6 +85,17 @@ func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }
 
+// @Summary Delete a task
+// @Description Delete a task
+// @Tags tasks/delete
+// @ID delete-task
+// @Accept  json
+// @Produce  json
+// @Param task body domain.TaskDeleteReq true "Task object"
+// @Success 200 {object} map[string]int
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /tasks/delete [delete]
 func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -95,19 +119,17 @@ func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }
 
-// GetTask handles the GET /tasks/{id} route.
-//
-// swagger:route GET /tasks/{id} task getTask
-//
-// Get a task by ID.
-//
-//	Produces:
-//	- application/json
-//
-//	Schemes: http
-//
-//	Responses:
-//	  200: taskGetResponse
+// @Summary Get a task by ID
+// @Description Get a task by ID
+// @Tags tasks/getById
+// @ID get-task
+// @Accept  json
+// @Produce  json
+// @Param task body domain.TaskGetByIdReq true "Task object"
+// @Success 200 {object} domain.TaskGetDataList
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /tasks/getById [get]
 func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -131,6 +153,16 @@ func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(task)
 }
 
+// @Summary Get all tasks
+// @Description Get all tasks
+// @Tags tasks/getAll
+// @ID get-all-tasks
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} []domain.TaskGetDataList
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /tasks/getAll [get]
 func (h TaskHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)

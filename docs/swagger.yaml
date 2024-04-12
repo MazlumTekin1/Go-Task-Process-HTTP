@@ -1,0 +1,560 @@
+basePath: /internal/api
+definitions:
+  domain.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  domain.LoginResponse:
+    properties:
+      expireTime:
+        type: string
+      isValid:
+        type: boolean
+      token:
+        type: string
+      userId:
+        type: integer
+    type: object
+  domain.TaskAddReq:
+    properties:
+      createUserId:
+        type: integer
+      description:
+        type: string
+      difficulty:
+        type: integer
+      duration:
+        type: integer
+      statusId:
+        type: integer
+      title:
+        type: string
+    type: object
+  domain.TaskDeleteReq:
+    properties:
+      id:
+        type: integer
+      updateUserId:
+        type: integer
+    type: object
+  domain.TaskGetByIdReq:
+    properties:
+      id:
+        type: integer
+    type: object
+  domain.TaskGetDataList:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      difficulty:
+        type: integer
+      duration:
+        type: integer
+      id:
+        type: integer
+      status:
+        type: string
+      statusId:
+        type: integer
+      title:
+        type: string
+    type: object
+  domain.TaskUpdateReq:
+    properties:
+      description:
+        type: string
+      difficulty:
+        type: integer
+      duration:
+        type: integer
+      id:
+        type: integer
+      statusId:
+        type: integer
+      title:
+        type: string
+      updateUserId:
+        type: integer
+    type: object
+  domain.UserAddReq:
+    properties:
+      createUserId:
+        type: integer
+      developerLevel:
+        type: integer
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      password:
+        type: string
+    type: object
+  domain.UserDeleteReq:
+    properties:
+      id:
+        type: integer
+      updateUserId:
+        type: integer
+    type: object
+  domain.UserGetByIdReq:
+    properties:
+      id:
+        type: integer
+    type: object
+  domain.UserGetDataList:
+    properties:
+      createdAt:
+        type: string
+      developerWorkHourDifficulty:
+        type: integer
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+    type: object
+  domain.UserUpdateReq:
+    properties:
+      developerLevel:
+        type: integer
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+      updateUserId:
+        type: integer
+    type: object
+host: localhost:45009
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a Task Process Service.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Task Process Service API
+  version: "1.0"
+paths:
+  /distributeTasks:
+    get:
+      consumes:
+      - application/json
+      description: Distribute tasks to users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Distribute tasks
+      tags:
+      - tasks
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login to the application
+      operationId: login
+      parameters:
+      - description: Login Request
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/domain.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login
+      tags:
+      - auth
+  /tasks/add:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new task to the task list
+      operationId: add-task
+      parameters:
+      - description: Task Add to Database
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/domain.TaskAddReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Add a new task
+      tags:
+      - tasks
+  /tasks/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a task
+      operationId: delete-task
+      parameters:
+      - description: Task object
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/domain.TaskDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a task
+      tags:
+      - tasks/delete
+  /tasks/getAll:
+    get:
+      consumes:
+      - application/json
+      description: Get all tasks
+      operationId: get-all-tasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.TaskGetDataList'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get all tasks
+      tags:
+      - tasks/getAll
+  /tasks/getById:
+    get:
+      consumes:
+      - application/json
+      description: Get a task by ID
+      operationId: get-task
+      parameters:
+      - description: Task object
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/domain.TaskGetByIdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.TaskGetDataList'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get a task by ID
+      tags:
+      - tasks/getById
+  /tasks/update:
+    put:
+      consumes:
+      - application/json
+      description: Update a task
+      operationId: update-task
+      parameters:
+      - description: Task object
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/domain.TaskUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: task Update
+      tags:
+      - tasks/update
+  /users/add:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new user to the user list
+      operationId: add-user
+      parameters:
+      - description: User Add to Database
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserAddReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Add a new user
+      tags:
+      - users
+  /users/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user
+      operationId: delete-user
+      parameters:
+      - description: User object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a user
+      tags:
+      - users/delete
+  /users/getAll:
+    get:
+      consumes:
+      - application/json
+      description: Get all users
+      operationId: get-all-users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.UserGetDataList'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get all users
+      tags:
+      - users/getAll
+  /users/getById:
+    get:
+      consumes:
+      - application/json
+      description: Get user by ID
+      operationId: get-user
+      parameters:
+      - description: User object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserGetByIdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.UserGetDataList'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get user by ID
+      tags:
+      - users/getById
+  /users/update:
+    put:
+      consumes:
+      - application/json
+      description: Update a user
+      operationId: update-user
+      parameters:
+      - description: User object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Update a user
+      tags:
+      - users/update
+schemes:
+- http
+swagger: "2.0"
