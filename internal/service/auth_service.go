@@ -18,7 +18,7 @@ type User struct {
 }
 
 type AuthService interface {
-	LoginService(req domain.LoginRequest) (domain.LoginResponse, error)
+	Login(req domain.LoginRequest) (domain.LoginResponse, error)
 	GenerateToken(email string, id int) (string, int)
 }
 
@@ -32,7 +32,7 @@ func NewAuthService(repo repository.AuthRepository) AuthService {
 	}
 }
 
-func (s *authService) LoginService(req domain.LoginRequest) (domain.LoginResponse, error) {
+func (s *authService) Login(req domain.LoginRequest) (domain.LoginResponse, error) {
 	var res domain.LoginResponse
 	checkUser, err := s.authRepo.Login(req)
 	if err != nil {

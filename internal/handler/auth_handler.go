@@ -38,7 +38,7 @@ func (handler *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resLogin, err := handler.AuthService.LoginService(req)
+	resLogin, err := handler.AuthService.Login(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

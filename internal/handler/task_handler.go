@@ -27,8 +27,8 @@ func NewTaskHandler(ser service.TaskService) TaskHandler {
 // @Success 201 {object} map[string]int
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /tasks/add [post]
 // @Security BearerAuth
+// @Router /tasks/add [post]
 func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)

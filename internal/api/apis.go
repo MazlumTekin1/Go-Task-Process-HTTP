@@ -17,6 +17,7 @@ import (
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
+// @type string
 // @title Go Task Process Service
 // @version 1.0
 // @description  Swagger documentation for the Go Task Process Service
