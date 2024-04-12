@@ -1,16 +1,17 @@
 package service
 
 import (
+	"strconv"
 	"task-process-service/internal/domain"
 	"task-process-service/internal/repository"
 )
 
 type TaskService interface {
-	AddTask(req domain.TaskAddReq) (int, error)
-	UpdateTask(req domain.TaskUpdateReq) (int, error)
-	DeleteTask(req domain.TaskDeleteReq) (int, error)
-	GetTaskById(req domain.TaskGetByIdReq) (domain.TaskGetDataList, error)
-	GetAllTask() ([]domain.TaskGetDataList, error)
+	Create(req domain.TaskAddReq) (int, error)
+	Update(req domain.TaskUpdateReq) (int, error)
+	Delete(req domain.TaskDeleteReq) (int, error)
+	GetById(req domain.TaskGetByIdReq) (domain.TaskGetDataList, error)
+	GetAll() ([]domain.TaskGetDataList, error)
 }
 
 type taskService struct {
@@ -23,35 +24,38 @@ func NewTaskService(repo repository.TaskRepository) TaskService {
 	}
 }
 
-func (s *taskService) AddTask(req domain.TaskAddReq) (int, error) {
+func (s *taskService) Create(req domain.TaskAddReq) (int, error) {
 	if req.CreateUserId <= 0 {
-		return 0, domain.NewUserIdIsRequiredError("AddTask", "CreateUserId is required, your User Id is {{req.CreateUserId}}")
+		return 0, domain.NewUserIdIsRequiredError("Create", `CreateUserId has to be more than zero , your User Id is `+strconv.Itoa(req.CreateUserId)+``)
+	}
+	if req.Title == "" || req.Description == "" || req.StatusId == 0 || req.Duration == 0 || req.Difficulty == 0 {
+		return 0, domain.NewTaskFieldIsRequiredError("Create", "Title, Description, and Status are required")
 	}
 	id, err := s.taskRepo.Create(req)
 	return id, err
 }
 
-func (s *taskService) UpdateTask(req domain.TaskUpdateReq) (int, error) {
+func (s *taskService) Update(req domain.TaskUpdateReq) (int, error) {
 	if req.UpdateUserId <= 0 {
-		return 0, domain.NewUserIdIsRequiredError("UpdateTask", "UpdateUserId is required, your User Id is {{req.UpdateUserId}}")
+		return 0, domain.NewUserIdIsRequiredError("Update", `UpdateUserId has to be more than zero, your User Id is `+strconv.Itoa(req.UpdateUserId)+``)
 	}
 	return s.taskRepo.Update(req)
 }
 
-func (s *taskService) DeleteTask(req domain.TaskDeleteReq) (int, error) {
+func (s *taskService) Delete(req domain.TaskDeleteReq) (int, error) {
 	if req.UpdateUserId <= 0 {
-		return 0, domain.NewUserIdIsRequiredError("DeleteTask", "UpdateUserId is required, your User Id is {{req.UpdateUserId}}")
+		return 0, domain.NewUserIdIsRequiredError("Delete", `UpdateUserId has to be more than zero, your User Id is `+strconv.Itoa(req.UpdateUserId)+``)
 	}
 	return s.taskRepo.Delete(req)
 }
 
-func (s *taskService) GetTaskById(req domain.TaskGetByIdReq) (domain.TaskGetDataList, error) {
+func (s *taskService) GetById(req domain.TaskGetByIdReq) (domain.TaskGetDataList, error) {
 	if req.Id <= 0 {
-		return domain.TaskGetDataList{}, domain.NewIdLessThanZeroError("GetTaskById", "UserId is required, your User Id is {{req.UserId}}")
+		return domain.TaskGetDataList{}, domain.NewIdLessThanZeroError("GetById", `UserId has to be more than zero, your User Id is `+strconv.Itoa(req.Id)+``)
 	}
 	return s.taskRepo.GetById(req)
 }
 
-func (s *taskService) GetAllTask() ([]domain.TaskGetDataList, error) {
+func (s *taskService) GetAll() ([]domain.TaskGetDataList, error) {
 	return s.taskRepo.GetAll()
 }

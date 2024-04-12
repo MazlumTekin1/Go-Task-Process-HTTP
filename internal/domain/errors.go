@@ -40,3 +40,10 @@ func NewIdLessThanZeroError(operation string, message string) error {
 		Message:   message,
 	}
 }
+
+func NewTaskFieldIsRequiredError(operation string, message string) error {
+	return &UserIdIsRequiredError{
+		Operation: operation,
+		Message:   message,
+	}
+}

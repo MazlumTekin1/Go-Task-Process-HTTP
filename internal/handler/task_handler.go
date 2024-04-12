@@ -13,8 +13,8 @@ type TaskHandler struct {
 	service service.TaskService
 }
 
-func NewTaskHandler(service service.TaskService) TaskHandler {
-	return TaskHandler{service: service}
+func NewTaskHandler(ser service.TaskService) TaskHandler {
+	return TaskHandler{service: ser}
 }
 
 // @Summary Add a new task
@@ -41,7 +41,7 @@ func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := h.service.AddTask(req)
+	id, err := h.service.Create(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -76,7 +76,7 @@ func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := h.service.UpdateTask(req)
+	id, err := h.service.Update(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -111,7 +111,7 @@ func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := h.service.DeleteTask(req)
+	id, err := h.service.Delete(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -146,7 +146,7 @@ func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	task, err := h.service.GetTaskById(req)
+	task, err := h.service.GetById(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -174,7 +174,7 @@ func (h TaskHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tasks, err := h.service.GetAllTask()
+	tasks, err := h.service.GetAll()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

@@ -37,7 +37,7 @@ func (h DistributeTasksHandler) DistributeTasks(w http.ResponseWriter, r *http.R
 	tasksChan := make(chan []domain.TaskGetDataList)
 	errChan := make(chan error)
 	go func() {
-		tasks, err := h.sTask.GetAllTask()
+		tasks, err := h.sTask.GetAll()
 		if err != nil {
 			errChan <- err
 			return
@@ -46,7 +46,7 @@ func (h DistributeTasksHandler) DistributeTasks(w http.ResponseWriter, r *http.R
 	}()
 
 	go func() {
-		users, err := h.sUser.GetAllUser()
+		users, err := h.sUser.GetAll()
 		if err != nil {
 			errChan <- err
 			return

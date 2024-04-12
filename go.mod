@@ -7,8 +7,8 @@ require (
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/jackc/pgx/v5 v5.5.5
 	github.com/prometheus/client_golang v1.19.0
+	github.com/stretchr/testify v1.9.0
 	github.com/swaggo/http-swagger v1.3.4
-	github.com/swaggo/http-swagger/example/go-chi v0.0.0-20230830153024-537f045bded0
 	github.com/swaggo/swag v1.16.3
 )
 
@@ -31,6 +31,7 @@ require (
 	github.com/prometheus/common v0.48.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/swaggo/files v1.0.1 // indirect
 	golang.org/x/crypto v0.22.0 // indirect
 	golang.org/x/net v0.24.0 // indirect

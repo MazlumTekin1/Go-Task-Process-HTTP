@@ -1,81 +1,201 @@
 package handler
 
-// func TestTaskHandler_Create(t *testing.T) {
-// 	mockRepo := new(mock.MockTaskRepository)
+import (
+	"bytes"
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
 
-// 	task := domain.TaskAddReq{Title: "Test Task", Description: "Test Description", StatusId: 1, CreateUserId: 1}
-// 	mockRepo.On("Create", task).Return(1, nil)
+	"task-process-service/internal/domain"
+	m "task-process-service/internal/service/mock"
 
-// 	handler := NewTaskHandler(mockRepo)
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+)
 
-// 	body, _ := json.Marshal(task)
-// 	req, err := http.NewRequest("POST", "/tasks/add", bytes.NewBuffer(body))
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
+func TestTaskHandler_Create(t *testing.T) {
+	mockService := &m.MockTaskService{}
+	mockService.On("Create", mock.Anything).Return(1, nil)
 
-// 	rr := httptest.NewRecorder()
+	taskHandler := NewTaskHandler(mockService)
 
-// 	handler.Create(rr, req)
+	task := domain.TaskAddReq{
+		Title:        "Sample Task",
+		Description:  "This is a sample task",
+		Duration:     10,
+		CreateUserId: 318836,
+	}
 
-// 	if status := rr.Code; status != http.StatusCreated {
-// 		t.Errorf("handler returned wrong status code: got %v want %v",
-// 			status, http.StatusCreated)
-// 	}
+	req := createTaskRequest(task)
 
-// 	var expected, actual map[string]interface{}
-// 	json.Unmarshal([]byte(`{"id":1}`), &expected)
-// 	json.Unmarshal(rr.Body.Bytes(), &actual)
-// 	if !reflect.DeepEqual(actual, expected) {
-// 		t.Errorf("handler returned unexpected body: got %v want %v",
-// 			actual, expected)
-// 	}
-// }
+	res := httptest.NewRecorder()
 
-// func TestTaskHandler_Update(t *testing.T) {
-// 	mockRepo := new(mock.MockTaskRepository)
+	taskHandler.Create(res, req)
 
-// 	task := domain.TaskUpdateReq{Id: 1, Title: "Test Task", Description: "Test Description", StatusId: 1, UpdateUserId: 1}
-// 	mockRepo.On("Update", task).Return(1, nil)
+	assertResponseCode(t, res.Code, http.StatusCreated)
+	assertTaskCreation(t, res.Body.String())
+	mockService.AssertCalled(t, "Create", task)
+}
 
-// 	handler := NewTaskHandler(mockRepo)
+func createTaskRequest(task domain.TaskAddReq) *http.Request {
+	taskJSON, _ := json.Marshal(task)
+	req, _ := http.NewRequest("POST", "/tasks/add", bytes.NewBuffer(taskJSON))
+	return req
+}
 
-// 	body, _ := json.Marshal(task)
-// 	req, err := http.NewRequest("PUT", "/tasks/update", bytes.NewBuffer(body))
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
+func assertResponseCode(t *testing.T, actual, expected int) {
+	t.Helper()
+	assert.Equal(t, expected, actual, "expected response code %d, got %d", expected, actual)
+}
 
-// 	rr := httptest.NewRecorder()
+func assertTaskCreation(t *testing.T, responseBody string) {
+	t.Helper()
+	var response map[string]int
+	err := json.Unmarshal([]byte(responseBody), &response)
+	assert.NoError(t, err)
+	assert.Contains(t, response, "id")
+	assert.NotZero(t, response["id"])
+}
 
-// 	handler.Update(rr, req)
+func TestTaskHandler_Update(t *testing.T) {
+	mockService := &m.MockTaskService{}
+	mockService.On("Update", mock.Anything).Return(1, nil)
 
-// 	assert.Equal(t, http.StatusOK, rr.Code)
+	taskHandler := NewTaskHandler(mockService)
 
-// 	expectedBody := `{"id":1}`
-// 	assert.JSONEq(t, expectedBody, rr.Body.String())
-// }
+	task := domain.TaskUpdateReq{
+		Id:           1,
+		Title:        "Sample Task",
+		Description:  "This is a sample task",
+		Duration:     10,
+		UpdateUserId: 318836,
+	}
 
-// func TestTaskHandler_Delete(t *testing.T) {
-// 	mockRepo := new(mock.MockTaskRepository)
+	req := updateTaskRequest(task)
 
-// 	task := domain.TaskDeleteReq{Id: 1, UpdateUserId: 1}
-// 	mockRepo.On("Delete", task).Return(1, nil)
+	res := httptest.NewRecorder()
 
-// 	handler := NewTaskHandler(mockRepo)
+	taskHandler.Update(res, req)
 
-// 	body, _ := json.Marshal(task)
-// 	req, err := http.NewRequest("DELETE", "/tasks/delete", bytes.NewBuffer(body))
-// 	if err != nil {
-// 		t.Fatal("Hata olustu: ", err)
-// 	}
+	assertResponseCode(t, res.Code, http.StatusOK)
+	assertTaskUpdate(t, res.Body.String())
+	mockService.AssertCalled(t, "Update", task)
+}
 
-// 	rr := httptest.NewRecorder()
+func updateTaskRequest(task domain.TaskUpdateReq) *http.Request {
+	taskJSON, _ := json.Marshal(task)
+	req, _ := http.NewRequest("PUT", "/tasks/update", bytes.NewBuffer(taskJSON))
+	return req
+}
 
-// 	handler.Delete(rr, req)
+func assertTaskUpdate(t *testing.T, responseBody string) {
+	t.Helper()
+	var response map[string]int
+	err := json.Unmarshal([]byte(responseBody), &response)
+	assert.NoError(t, err)
+	assert.Contains(t, response, "id")
+	assert.NotZero(t, response["id"])
+}
 
-// 	assert.Equal(t, http.StatusOK, rr.Code)
+func TestTaskHandler_Delete(t *testing.T) {
+	mockService := &m.MockTaskService{}
+	mockService.On("Delete", mock.Anything).Return(1, nil)
 
-// 	expectedBody := `{"id":1}`
-// 	assert.JSONEq(t, expectedBody, rr.Body.String())
-// }
+	taskHandler := NewTaskHandler(mockService)
+
+	task := domain.TaskDeleteReq{
+		Id:           1,
+		UpdateUserId: 318836,
+	}
+
+	req := deleteTaskRequest(task)
+
+	res := httptest.NewRecorder()
+
+	taskHandler.Delete(res, req)
+
+	assertResponseCode(t, res.Code, http.StatusOK)
+	assertTaskDelete(t, res.Body.String())
+	mockService.AssertCalled(t, "Delete", task)
+}
+
+func deleteTaskRequest(task domain.TaskDeleteReq) *http.Request {
+	taskJSON, _ := json.Marshal(task)
+	req, _ := http.NewRequest("DELETE", "/tasks/delete", bytes.NewBuffer(taskJSON))
+	return req
+}
+
+func assertTaskDelete(t *testing.T, responseBody string) {
+	t.Helper()
+	var response map[string]int
+	err := json.Unmarshal([]byte(responseBody), &response)
+	assert.NoError(t, err)
+	assert.Contains(t, response, "id")
+	assert.NotZero(t, response["id"])
+}
+
+func TestTaskHandler_GetById(t *testing.T) {
+	mockService := &m.MockTaskService{}
+	mockService.On("GetById", mock.Anything).Return(domain.TaskGetDataList{}, nil)
+
+	taskHandler := NewTaskHandler(mockService)
+
+	task := domain.TaskGetByIdReq{
+		Id: 1,
+	}
+
+	req := getByIdRequest(task)
+
+	res := httptest.NewRecorder()
+
+	taskHandler.GetById(res, req)
+
+	assertResponseCode(t, res.Code, http.StatusOK)
+	assertTaskGetById(t, res.Body.String())
+	mockService.AssertCalled(t, "GetById", task)
+}
+
+func getByIdRequest(task domain.TaskGetByIdReq) *http.Request {
+	taskJSON, _ := json.Marshal(task)
+	req, _ := http.NewRequest("GET", "/tasks/getById", bytes.NewBuffer(taskJSON))
+	return req
+}
+
+func assertTaskGetById(t *testing.T, responseBody string) {
+	t.Helper()
+	var response domain.TaskGetDataList
+	err := json.Unmarshal([]byte(responseBody), &response)
+	assert.NoError(t, err)
+	assert.NotZero(t, response)
+}
+
+func TestTaskHandler_GetAll(t *testing.T) {
+	mockService := &m.MockTaskService{}
+	mockService.On("GetAll").Return([]domain.TaskGetDataList{}, nil)
+
+	taskHandler := NewTaskHandler(mockService)
+
+	req := getAllRequest()
+
+	res := httptest.NewRecorder()
+
+	taskHandler.GetAll(res, req)
+
+	assertResponseCode(t, res.Code, http.StatusOK)
+	assertTaskGetAll(t, res.Body.String())
+	mockService.AssertCalled(t, "GetAll")
+}
+
+func getAllRequest() *http.Request {
+	req, _ := http.NewRequest("GET", "/tasks/getAll", nil)
+	return req
+}
+
+func assertTaskGetAll(t *testing.T, responseBody string) {
+	t.Helper()
+	var response []domain.TaskGetDataList
+	err := json.Unmarshal([]byte(responseBody), &response)
+	assert.NoError(t, err)
+	assert.NotZero(t, response)
+}

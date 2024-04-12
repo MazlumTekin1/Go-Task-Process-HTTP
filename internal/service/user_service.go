@@ -1,16 +1,17 @@
 package service
 
 import (
+	"strconv"
 	"task-process-service/internal/domain"
 	"task-process-service/internal/repository"
 )
 
 type UserService interface {
-	AddUser(req domain.UserAddReq) (int, error)
-	UpdateUser(req domain.UserUpdateReq) (int, error)
-	DeleteUser(req domain.UserDeleteReq) (int, error)
-	GetUserById(req domain.UserGetByIdReq) (domain.UserGetDataList, error)
-	GetAllUser() ([]domain.UserGetDataList, error)
+	Create(req domain.UserAddReq) (int, error)
+	Update(req domain.UserUpdateReq) (int, error)
+	Delete(req domain.UserDeleteReq) (int, error)
+	GetById(req domain.UserGetByIdReq) (domain.UserGetDataList, error)
+	GetAll() ([]domain.UserGetDataList, error)
 }
 
 type userService struct {
@@ -23,34 +24,34 @@ func NewUserService(repo repository.UserRepository) UserService {
 	}
 }
 
-func (s *userService) AddUser(req domain.UserAddReq) (int, error) {
+func (s *userService) Create(req domain.UserAddReq) (int, error) {
 	if req.CreateUserId <= 0 {
-		return 0, domain.NewUserIdIsRequiredError("AddUser", "CreateUserId is required, your User Id is {{req.CreateUserId}}")
+		return 0, domain.NewUserIdIsRequiredError("Create", `CreateUserId has to be more than zero, your User Id is `+strconv.Itoa(req.CreateUserId)+``)
 	}
 	return s.userRepo.Create(req)
 }
 
-func (s *userService) UpdateUser(req domain.UserUpdateReq) (int, error) {
+func (s *userService) Update(req domain.UserUpdateReq) (int, error) {
 	if req.UpdateUserId <= 0 {
-		return 0, domain.NewUserIdIsRequiredError("UpdateUser", "UpdateUserId is required, your User Id is {{req.UpdateUserId}}")
+		return 0, domain.NewUserIdIsRequiredError("Update", `UpdateUserId has to be more than zero, your User Id is `+strconv.Itoa(req.UpdateUserId)+``)
 	}
 	return s.userRepo.Update(req)
 }
 
-func (s *userService) DeleteUser(req domain.UserDeleteReq) (int, error) {
+func (s *userService) Delete(req domain.UserDeleteReq) (int, error) {
 	if req.UpdateUserId <= 0 {
-		return 0, domain.NewUserIdIsRequiredError("DeleteUser", "UpdateUserId is required, your User Id is {{req.UpdateUserId}}")
+		return 0, domain.NewUserIdIsRequiredError("Delete", `UpdateUserId has to be more than zero, your User Id is `+strconv.Itoa(req.UpdateUserId)+``)
 	}
 	return s.userRepo.Delete(req)
 }
 
-func (s *userService) GetUserById(req domain.UserGetByIdReq) (domain.UserGetDataList, error) {
+func (s *userService) GetById(req domain.UserGetByIdReq) (domain.UserGetDataList, error) {
 	if req.Id <= 0 {
-		return domain.UserGetDataList{}, domain.NewIdLessThanZeroError("GetUserById", "UserId is required, your User Id is {{req.UserId}}")
+		return domain.UserGetDataList{}, domain.NewIdLessThanZeroError("GetById", `UserId has to be more than zero, your User Id is `+strconv.Itoa(req.Id)+``)
 	}
 	return s.userRepo.GetById(req)
 }
 
-func (s *userService) GetAllUser() ([]domain.UserGetDataList, error) {
+func (s *userService) GetAll() ([]domain.UserGetDataList, error) {
 	return s.userRepo.GetAll()
 }

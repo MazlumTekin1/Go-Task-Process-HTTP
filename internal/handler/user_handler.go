@@ -40,7 +40,7 @@ func (h UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := h.service.AddUser(req)
+	id, err := h.service.Create(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -75,7 +75,7 @@ func (h UserHandler) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := h.service.UpdateUser(req)
+	id, err := h.service.Update(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -110,7 +110,7 @@ func (h UserHandler) Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := h.service.DeleteUser(req)
+	id, err := h.service.Delete(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -145,7 +145,7 @@ func (h UserHandler) GetById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := h.service.GetUserById(req)
+	user, err := h.service.GetById(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -173,7 +173,7 @@ func (h UserHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	users, err := h.service.GetAllUser()
+	users, err := h.service.GetAll()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
