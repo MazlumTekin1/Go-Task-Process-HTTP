@@ -1,25 +1,13 @@
 {
-    "schemes": [
-        "http"
-    ],
     "swagger": "2.0",
     "info": {
-        "description": "This is a Task Process Service.",
-        "title": "Swagger Task Process Service API",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
+        "description": "This is a sample server for Swagger documentation",
+        "title": "Swagger Example API",
+        "contact": {},
         "version": "1.0"
     },
     "host": "localhost:45009",
-    "basePath": "/internal/api",
+    "basePath": "/",
     "paths": {
         "/distributeTasks": {
             "get": {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"path/filepath"
+	"task-process-service/docs"
 	"task-process-service/internal/api"
 	postgres "task-process-service/internal/postgres"
 
@@ -11,20 +12,12 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-// @title Swagger Task Process Service API
+// @title Swagger Example API
 // @version 1.0
-// @description This is a Task Process Service.
-// @termsOfService http://swagger.io/terms/
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @description This is a sample server for Swagger documentation
 // @host localhost:45009
-// @BasePath /internal/api
-// @schemes http
+// @BasePath /
 func main() {
-	// absPath, err := filepath.Abs("../internal/config.json")
 	absPath, err := filepath.Abs("./internal/config.json")
 	if err != nil {
 		log.Fatal(err)
@@ -37,9 +30,16 @@ func main() {
 	// Start the server
 	log.Println("Starting the Go Task Process Service!")
 	r := chi.NewRouter()
+	docs.SwaggerInfo.Title = "Swagger Example API"
+	docs.SwaggerInfo.Description = "This is a sample server for Swagger documentation"
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "localhost:45009"
+	docs.SwaggerInfo.BasePath = "/"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+
 	r.Get("/swagger/*", httpSwagger.Handler(
 		httpSwagger.URL("http://localhost:45009/swagger/doc.json"),
 	))
-	api.StartServer(r)
 
+	api.StartServer(r)
 }

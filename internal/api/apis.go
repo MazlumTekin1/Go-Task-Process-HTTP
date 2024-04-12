@@ -10,7 +10,6 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
 )
 
 func StartServer(r *chi.Mux) {

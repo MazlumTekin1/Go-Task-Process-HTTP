@@ -1,4 +1,4 @@
-basePath: /internal/api
+basePath: /
 definitions:
   domain.LoginRequest:
     properties:
@@ -140,16 +140,9 @@ definitions:
     type: object
 host: localhost:45009
 info:
-  contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: This is a Task Process Service.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Swagger Task Process Service API
+  contact: {}
+  description: This is a sample server for Swagger documentation
+  title: Swagger Example API
   version: "1.0"
 paths:
   /distributeTasks:
@@ -555,6 +548,4 @@ paths:
       summary: Update a user
       tags:
       - users/update
-schemes:
-- http
 swagger: "2.0"
