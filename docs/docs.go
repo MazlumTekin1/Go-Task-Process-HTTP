@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/distributeTasks": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Distribute tasks to users",
                 "consumes": [
                     "application/json"
@@ -25,7 +30,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "tasks"
+                    "Distribute Tasks"
                 ],
                 "summary": "Distribute tasks",
                 "responses": {
@@ -49,7 +54,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "Auth"
                 ],
                 "summary": "Login",
                 "operationId": "login",
@@ -94,6 +99,11 @@ const docTemplate = `{
         },
         "/tasks/add": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Adds a new task to the task list",
                 "consumes": [
                     "application/json"
@@ -102,7 +112,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "tasks"
+                    "Tasks"
                 ],
                 "summary": "Add a new task",
                 "operationId": "add-task",
@@ -150,6 +160,11 @@ const docTemplate = `{
         },
         "/tasks/delete": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a task",
                 "consumes": [
                     "application/json"
@@ -158,7 +173,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "tasks/delete"
+                    "Tasks"
                 ],
                 "summary": "Delete a task",
                 "operationId": "delete-task",
@@ -206,6 +221,11 @@ const docTemplate = `{
         },
         "/tasks/getAll": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all tasks",
                 "consumes": [
                     "application/json"
@@ -214,7 +234,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "tasks/getAll"
+                    "Tasks"
                 ],
                 "summary": "Get all tasks",
                 "operationId": "get-all-tasks",
@@ -251,6 +271,11 @@ const docTemplate = `{
         },
         "/tasks/getById": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get a task by ID",
                 "consumes": [
                     "application/json"
@@ -259,7 +284,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "tasks/getById"
+                    "Tasks"
                 ],
                 "summary": "Get a task by ID",
                 "operationId": "get-task",
@@ -304,6 +329,11 @@ const docTemplate = `{
         },
         "/tasks/update": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a task",
                 "consumes": [
                     "application/json"
@@ -312,7 +342,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "tasks/update"
+                    "Tasks"
                 ],
                 "summary": "task Update",
                 "operationId": "update-task",
@@ -360,6 +390,11 @@ const docTemplate = `{
         },
         "/users/add": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Adds a new user to the user list",
                 "consumes": [
                     "application/json"
@@ -368,7 +403,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "Users"
                 ],
                 "summary": "Add a new user",
                 "operationId": "add-user",
@@ -416,6 +451,11 @@ const docTemplate = `{
         },
         "/users/delete": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a user",
                 "consumes": [
                     "application/json"
@@ -424,7 +464,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users/delete"
+                    "Users"
                 ],
                 "summary": "Delete a user",
                 "operationId": "delete-user",
@@ -472,6 +512,11 @@ const docTemplate = `{
         },
         "/users/getAll": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all users",
                 "consumes": [
                     "application/json"
@@ -480,7 +525,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users/getAll"
+                    "Users"
                 ],
                 "summary": "Get all users",
                 "operationId": "get-all-users",
@@ -517,6 +562,11 @@ const docTemplate = `{
         },
         "/users/getById": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get user by ID",
                 "consumes": [
                     "application/json"
@@ -525,7 +575,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users/getById"
+                    "Users"
                 ],
                 "summary": "Get user by ID",
                 "operationId": "get-user",
@@ -570,6 +620,11 @@ const docTemplate = `{
         },
         "/users/update": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a user",
                 "consumes": [
                     "application/json"
@@ -578,7 +633,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users/update"
+                    "Users"
                 ],
                 "summary": "Update a user",
                 "operationId": "update-user",
@@ -844,12 +899,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
-	Host:             "localhost:45009",
-	BasePath:         "/",
+	Version:          "",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Swagger Example API",
-	Description:      "This is a sample server for Swagger documentation",
+	Title:            "",
+	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

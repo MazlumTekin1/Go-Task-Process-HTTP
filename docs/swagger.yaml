@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   domain.LoginRequest:
     properties:
@@ -138,12 +137,8 @@ definitions:
       updateUserId:
         type: integer
     type: object
-host: localhost:45009
 info:
   contact: {}
-  description: This is a sample server for Swagger documentation
-  title: Swagger Example API
-  version: "1.0"
 paths:
   /distributeTasks:
     get:
@@ -158,9 +153,11 @@ paths:
           schema:
             additionalProperties: true
             type: object
+      security:
+      - BearerAuth: []
       summary: Distribute tasks
       tags:
-      - tasks
+      - Distribute Tasks
   /login:
     post:
       consumes:
@@ -195,7 +192,7 @@ paths:
             type: object
       summary: Login
       tags:
-      - auth
+      - Auth
   /tasks/add:
     post:
       consumes:
@@ -230,9 +227,11 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Add a new task
       tags:
-      - tasks
+      - Tasks
   /tasks/delete:
     delete:
       consumes:
@@ -267,9 +266,11 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Delete a task
       tags:
-      - tasks/delete
+      - Tasks
   /tasks/getAll:
     get:
       consumes:
@@ -297,9 +298,11 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Get all tasks
       tags:
-      - tasks/getAll
+      - Tasks
   /tasks/getById:
     get:
       consumes:
@@ -332,9 +335,11 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Get a task by ID
       tags:
-      - tasks/getById
+      - Tasks
   /tasks/update:
     put:
       consumes:
@@ -369,9 +374,11 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: task Update
       tags:
-      - tasks/update
+      - Tasks
   /users/add:
     post:
       consumes:
@@ -406,9 +413,11 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Add a new user
       tags:
-      - users
+      - Users
   /users/delete:
     delete:
       consumes:
@@ -443,9 +452,11 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Delete a user
       tags:
-      - users/delete
+      - Users
   /users/getAll:
     get:
       consumes:
@@ -473,9 +484,11 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Get all users
       tags:
-      - users/getAll
+      - Users
   /users/getById:
     get:
       consumes:
@@ -508,9 +521,11 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Get user by ID
       tags:
-      - users/getById
+      - Users
   /users/update:
     put:
       consumes:
@@ -545,7 +560,9 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Update a user
       tags:
-      - users/update
+      - Users
 swagger: "2.0"

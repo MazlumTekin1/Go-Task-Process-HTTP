@@ -19,7 +19,7 @@ func NewTaskHandler(service service.TaskService) TaskHandler {
 
 // @Summary Add a new task
 // @Description Adds a new task to the task list
-// @Tags tasks
+// @Tags Tasks
 // @ID add-task
 // @Accept  json
 // @Produce  json
@@ -28,6 +28,7 @@ func NewTaskHandler(service service.TaskService) TaskHandler {
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/add [post]
+// @Security BearerAuth
 func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -53,7 +54,7 @@ func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 // @Summary task Update
 // @Description Update a task
-// @Tags tasks/update
+// @Tags Tasks
 // @ID update-task
 // @Accept  json
 // @Produce  json
@@ -62,6 +63,7 @@ func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/update [put]
+// @Security BearerAuth
 func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -87,7 +89,7 @@ func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 
 // @Summary Delete a task
 // @Description Delete a task
-// @Tags tasks/delete
+// @Tags Tasks
 // @ID delete-task
 // @Accept  json
 // @Produce  json
@@ -96,6 +98,7 @@ func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/delete [delete]
+// @Security BearerAuth
 func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -121,7 +124,7 @@ func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 
 // @Summary Get a task by ID
 // @Description Get a task by ID
-// @Tags tasks/getById
+// @Tags Tasks
 // @ID get-task
 // @Accept  json
 // @Produce  json
@@ -130,6 +133,7 @@ func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/getById [get]
+// @Security BearerAuth
 func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -155,7 +159,7 @@ func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 
 // @Summary Get all tasks
 // @Description Get all tasks
-// @Tags tasks/getAll
+// @Tags Tasks
 // @ID get-all-tasks
 // @Accept  json
 // @Produce  json
@@ -163,6 +167,7 @@ func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/getAll [get]
+// @Security BearerAuth
 func (h TaskHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)

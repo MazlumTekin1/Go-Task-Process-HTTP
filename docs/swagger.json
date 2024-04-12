@@ -1,16 +1,16 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server for Swagger documentation",
-        "title": "Swagger Example API",
-        "contact": {},
-        "version": "1.0"
+        "contact": {}
     },
-    "host": "localhost:45009",
-    "basePath": "/",
     "paths": {
         "/distributeTasks": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Distribute tasks to users",
                 "consumes": [
                     "application/json"
@@ -19,7 +19,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "tasks"
+                    "Distribute Tasks"
                 ],
                 "summary": "Distribute tasks",
                 "responses": {
@@ -43,7 +43,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "Auth"
                 ],
                 "summary": "Login",
                 "operationId": "login",
@@ -88,6 +88,11 @@
         },
         "/tasks/add": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Adds a new task to the task list",
                 "consumes": [
                     "application/json"
@@ -96,7 +101,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "tasks"
+                    "Tasks"
                 ],
                 "summary": "Add a new task",
                 "operationId": "add-task",
@@ -144,6 +149,11 @@
         },
         "/tasks/delete": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a task",
                 "consumes": [
                     "application/json"
@@ -152,7 +162,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "tasks/delete"
+                    "Tasks"
                 ],
                 "summary": "Delete a task",
                 "operationId": "delete-task",
@@ -200,6 +210,11 @@
         },
         "/tasks/getAll": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all tasks",
                 "consumes": [
                     "application/json"
@@ -208,7 +223,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "tasks/getAll"
+                    "Tasks"
                 ],
                 "summary": "Get all tasks",
                 "operationId": "get-all-tasks",
@@ -245,6 +260,11 @@
         },
         "/tasks/getById": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get a task by ID",
                 "consumes": [
                     "application/json"
@@ -253,7 +273,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "tasks/getById"
+                    "Tasks"
                 ],
                 "summary": "Get a task by ID",
                 "operationId": "get-task",
@@ -298,6 +318,11 @@
         },
         "/tasks/update": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a task",
                 "consumes": [
                     "application/json"
@@ -306,7 +331,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "tasks/update"
+                    "Tasks"
                 ],
                 "summary": "task Update",
                 "operationId": "update-task",
@@ -354,6 +379,11 @@
         },
         "/users/add": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Adds a new user to the user list",
                 "consumes": [
                     "application/json"
@@ -362,7 +392,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "Users"
                 ],
                 "summary": "Add a new user",
                 "operationId": "add-user",
@@ -410,6 +440,11 @@
         },
         "/users/delete": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a user",
                 "consumes": [
                     "application/json"
@@ -418,7 +453,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "users/delete"
+                    "Users"
                 ],
                 "summary": "Delete a user",
                 "operationId": "delete-user",
@@ -466,6 +501,11 @@
         },
         "/users/getAll": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all users",
                 "consumes": [
                     "application/json"
@@ -474,7 +514,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "users/getAll"
+                    "Users"
                 ],
                 "summary": "Get all users",
                 "operationId": "get-all-users",
@@ -511,6 +551,11 @@
         },
         "/users/getById": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get user by ID",
                 "consumes": [
                     "application/json"
@@ -519,7 +564,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "users/getById"
+                    "Users"
                 ],
                 "summary": "Get user by ID",
                 "operationId": "get-user",
@@ -564,6 +609,11 @@
         },
         "/users/update": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a user",
                 "consumes": [
                     "application/json"
@@ -572,7 +622,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "users/update"
+                    "Users"
                 ],
                 "summary": "Update a user",
                 "operationId": "update-user",

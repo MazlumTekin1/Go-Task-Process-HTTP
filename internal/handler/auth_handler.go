@@ -20,7 +20,7 @@ func NewAuthHandler(service service.AuthService) AuthHandler {
 
 // @Summary Login
 // @Description Login to the application
-// @Tags auth
+// @Tags Auth
 // @ID login
 // @Accept  json
 // @Produce  json
