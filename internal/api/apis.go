@@ -14,15 +14,6 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-// @securityDefinitions.apikey ApiKeyAuth
-// @in header
-// @name Authorization
-// @type string
-// @title Go Task Process Service
-// @version 1.0
-// @description  Swagger documentation for the Go Task Process Service
-// @host localhost:45009
-// @BasePath /
 func StartServer() {
 	jwtService := service.NewJWTAuthService()
 	authMiddleware := middleware.AuthMiddleware(*jwtService)
@@ -37,7 +28,7 @@ func StartServer() {
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = "localhost:45009"
 	docs.SwaggerInfo.BasePath = "/"
-	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+	docs.SwaggerInfo.Schemes = []string{"http"}
 
 	r.Get("/swagger/*", httpSwagger.Handler(
 		httpSwagger.URL("http://localhost:45009/swagger/doc.json"),

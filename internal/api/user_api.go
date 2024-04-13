@@ -13,6 +13,6 @@ func setupUserRoutes(r *chi.Mux, s service.UserService, authMiddleware func(http
 	r.HandleFunc("/users/add", authMiddleware(rateLimit(userHandler.Create)))
 	r.HandleFunc("/users/update", authMiddleware(rateLimit(userHandler.Update)))
 	r.HandleFunc("/users/delete", authMiddleware(rateLimit(userHandler.Delete)))
-	r.HandleFunc("/users/getById", authMiddleware(rateLimit(userHandler.GetById)))
+	r.HandleFunc("/users/getById/{id}", authMiddleware(rateLimit(userHandler.GetById)))
 	r.HandleFunc("/users/getAll", authMiddleware(rateLimit(userHandler.GetAll)))
 }
