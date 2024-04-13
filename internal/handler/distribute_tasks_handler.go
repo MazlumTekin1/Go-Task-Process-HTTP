@@ -25,9 +25,9 @@ func NewDistributeTasksHandler(sTask service.TaskService, sUser service.UserServ
 // @Tags Distribute Tasks
 // @Accept  json
 // @Produce  json
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 200 {object} map[string]interface{}
 // @Router /distributeTasks [get]
-// @Security ApiKeyAuth
 func (h DistributeTasksHandler) DistributeTasks(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)

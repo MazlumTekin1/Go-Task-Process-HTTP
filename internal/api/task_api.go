@@ -13,6 +13,6 @@ func setupTaskRoutes(r *chi.Mux, s service.TaskService, authMiddleware func(http
 	r.HandleFunc("/tasks/add", authMiddleware(rateLimit(taskHandler.Create)))
 	r.HandleFunc("/tasks/update", authMiddleware(rateLimit(taskHandler.Update)))
 	r.HandleFunc("/tasks/delete", authMiddleware(rateLimit(taskHandler.Delete)))
-	r.HandleFunc("/tasks/getById", authMiddleware(rateLimit(taskHandler.GetById)))
+	r.HandleFunc("/tasks/getById/{id}", authMiddleware(rateLimit(taskHandler.GetById)))
 	r.HandleFunc("/tasks/getAll", authMiddleware(rateLimit(taskHandler.GetAll)))
 }

@@ -1,7 +1,6 @@
 # Go Task Process Net/Http
 
-## Uyarı: Şu anda Swagger ile ilgili ufak bir sıkıntı var. Yakında çözülecek. Eğer bu süre zarfı içinde bakıyorsanız internal/sql klasöründeki Go-Task-Project-Http-Postman-Collection.json collection'u import edebilirsiniz.
-## Warning: There is a slight issue with Swagger right now. It will be resolved soon
+### Current Branch Production
 
 ## Getting Started
 
@@ -24,6 +23,7 @@
 - A Linear Programming function has been designed that can distribute all tasks in the shortest time by taking into account the levels of Users, the difficulty levels of Tasks and Task durations, so that it can only do tasks at its own level and lower levels.
 
 - Swagger implementation was prepared for API documentation.
+- CQRS Middleware business rule
 - Promethius tool was implemented for monitoring. Metrics and count feature can be monitored.
 
 - Created unit tests for User and Task
@@ -48,6 +48,22 @@ A step by step series of examples that tell you how to get a development environ
 7. go run main.go
 8. Example token user: Email: admin@test.com password:admin
 
+## Use Swagger
+```bash
+   As an example, let's look at the tasks/add API for Task,
+Here 
+{
+ "createUserId": 318836,
+ "description": "New Task Description",
+ "difficulty": 4,
+ "duration": 12,
+ "statusId": 3,
+ "title": "New Task Title"
+}
+
+Authorization 
+Here you need to enter the token information you received from the Bearer </login endpoint>.
+```
 
 ## Running the tests
 
@@ -68,4 +84,4 @@ Explain how to run the automated tests for this system.
 
 ## Authors
 
-- Mazlum Tekin - Initial work - [MazlumTekin](https://github.com/MazlumTekin1)
+- Mazlum Tekin - Initial work - [MazlumTekin](https://github.com/MazlumTekin1/Go-Task-Process-HTTP)

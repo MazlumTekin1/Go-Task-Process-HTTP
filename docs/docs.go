@@ -17,11 +17,6 @@ const docTemplate = `{
     "paths": {
         "/distributeTasks": {
             "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "Distribute tasks to users",
                 "consumes": [
                     "application/json"
@@ -33,6 +28,15 @@ const docTemplate = `{
                     "Distribute Tasks"
                 ],
                 "summary": "Distribute tasks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -99,11 +103,6 @@ const docTemplate = `{
         },
         "/tasks/add": {
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Adds a new task to the task list",
                 "consumes": [
                     "application/json"
@@ -125,6 +124,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/domain.TaskAddReq"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -160,11 +166,6 @@ const docTemplate = `{
         },
         "/tasks/delete": {
             "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Delete a task",
                 "consumes": [
                     "application/json"
@@ -186,6 +187,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/domain.TaskDeleteReq"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -221,11 +229,6 @@ const docTemplate = `{
         },
         "/tasks/getAll": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get all tasks",
                 "consumes": [
                     "application/json"
@@ -238,6 +241,15 @@ const docTemplate = `{
                 ],
                 "summary": "Get all tasks",
                 "operationId": "get-all-tasks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -269,13 +281,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/tasks/getById": {
+        "/tasks/getById/{id}": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get a task by ID",
                 "consumes": [
                     "application/json"
@@ -290,13 +297,18 @@ const docTemplate = `{
                 "operationId": "get-task",
                 "parameters": [
                     {
-                        "description": "Task object",
-                        "name": "task",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/domain.TaskGetByIdReq"
-                        }
+                        "type": "integer",
+                        "description": "Task ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -329,11 +341,6 @@ const docTemplate = `{
         },
         "/tasks/update": {
             "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Update a task",
                 "consumes": [
                     "application/json"
@@ -355,6 +362,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/domain.TaskUpdateReq"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -390,11 +404,6 @@ const docTemplate = `{
         },
         "/users/add": {
             "post": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "Adds a new user to the user list",
                 "consumes": [
                     "application/json"
@@ -416,6 +425,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/domain.UserAddReq"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -451,11 +467,6 @@ const docTemplate = `{
         },
         "/users/delete": {
             "delete": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "Delete a user",
                 "consumes": [
                     "application/json"
@@ -477,6 +488,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/domain.UserDeleteReq"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -512,11 +530,6 @@ const docTemplate = `{
         },
         "/users/getAll": {
             "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "Get all users",
                 "consumes": [
                     "application/json"
@@ -529,6 +542,15 @@ const docTemplate = `{
                 ],
                 "summary": "Get all users",
                 "operationId": "get-all-users",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -560,13 +582,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/getById": {
+        "/users/getById/{id}": {
             "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "Get user by ID",
                 "consumes": [
                     "application/json"
@@ -581,13 +598,18 @@ const docTemplate = `{
                 "operationId": "get-user",
                 "parameters": [
                     {
-                        "description": "User object",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/domain.UserGetByIdReq"
-                        }
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -620,11 +642,6 @@ const docTemplate = `{
         },
         "/users/update": {
             "put": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "Update a user",
                 "consumes": [
                     "application/json"
@@ -646,6 +663,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/domain.UserUpdateReq"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -743,14 +767,6 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.TaskGetByIdReq": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                }
-            }
-        },
         "domain.TaskGetDataList": {
             "type": "object",
             "properties": {
@@ -836,14 +852,6 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updateUserId": {
-                    "type": "integer"
-                }
-            }
-        },
-        "domain.UserGetByIdReq": {
-            "type": "object",
-            "properties": {
-                "id": {
                     "type": "integer"
                 }
             }

@@ -3,10 +3,13 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"task-process-service/internal/domain"
 	m "task-process-service/internal/monitoring"
 
 	"task-process-service/internal/service"
+
+	"github.com/go-chi/chi"
 )
 
 type TaskHandler struct {
@@ -24,10 +27,10 @@ func NewTaskHandler(ser service.TaskService) TaskHandler {
 // @Accept  json
 // @Produce  json
 // @Param task body domain.TaskAddReq true "Task Add to Database"
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 201 {object} map[string]int
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Security ApiKeyAuth
 // @Router /tasks/add [post]
 func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -59,11 +62,11 @@ func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 // @Accept  json
 // @Produce  json
 // @Param task body domain.TaskUpdateReq true "Task object"
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 200 {object} map[string]int
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/update [put]
-// @Security ApiKeyAuth
 func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -94,11 +97,11 @@ func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 // @Accept  json
 // @Produce  json
 // @Param task body domain.TaskDeleteReq true "Task object"
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 200 {object} map[string]int
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/delete [delete]
-// @Security ApiKeyAuth
 func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -128,30 +131,32 @@ func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 // @ID get-task
 // @Accept  json
 // @Produce  json
-// @Param task body domain.TaskGetByIdReq true "Task object"
+// @Param id path int true "Task ID"
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 200 {object} domain.TaskGetDataList
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /tasks/getById [get]
-// @Security ApiKeyAuth
+// @Router /tasks/getById/{id} [get]
 func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-	var req domain.TaskGetByIdReq
-	err := json.NewDecoder(r.Body).Decode(&req)
+
+	idStr := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "Invalid id", http.StatusBadRequest)
 		return
 	}
 
+	req := domain.TaskGetByIdReq{Id: id}
 	task, err := h.service.GetById(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	m.TaskGetById.Inc()
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(task)
@@ -163,11 +168,11 @@ func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 // @ID get-all-tasks
 // @Accept  json
 // @Produce  json
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 200 {object} []domain.TaskGetDataList
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/getAll [get]
-// @Security ApiKeyAuth
 func (h TaskHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)

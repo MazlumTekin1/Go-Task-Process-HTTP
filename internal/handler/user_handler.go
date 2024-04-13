@@ -3,9 +3,12 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"task-process-service/internal/domain"
 	m "task-process-service/internal/monitoring"
 	"task-process-service/internal/service"
+
+	"github.com/go-chi/chi"
 )
 
 type UserHandler struct {
@@ -23,11 +26,11 @@ func NewUserHandler(ser service.UserService) UserHandler {
 // @Accept  json
 // @Produce  json
 // @Param user body domain.UserAddReq true "User Add to Database"
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 201 {object} map[string]int
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /users/add [post]
-// @Security ApiKeyAuth
 func (h UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -58,11 +61,11 @@ func (h UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 // @Accept  json
 // @Produce  json
 // @Param user body domain.UserUpdateReq true "User object"
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 200 {object} map[string]int
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /users/update [put]
-// @Security ApiKeyAuth
 func (h UserHandler) Update(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -93,11 +96,11 @@ func (h UserHandler) Update(w http.ResponseWriter, r *http.Request) {
 // @Accept  json
 // @Produce  json
 // @Param user body domain.UserDeleteReq true "User object"
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 200 {object} map[string]int
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /users/delete [delete]
-// @Security ApiKeyAuth
 func (h UserHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -121,30 +124,31 @@ func (h UserHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }
 
-// @Summary Get user by ID
-// @Description Get user by ID
+// @Summary Get a user by ID
+// @Description Get a user by ID
 // @Tags Users
 // @ID get-user
 // @Accept  json
 // @Produce  json
-// @Param user body domain.UserGetByIdReq true "User object"
+// @Param id path int true "User ID"
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 200 {object} domain.UserGetDataList
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /users/getById [get]
-// @Security ApiKeyAuth
+// @Router /users/getById/{id} [get]
 func (h UserHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-	var req domain.UserGetByIdReq
-	err := json.NewDecoder(r.Body).Decode(&req)
+	idStr := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "Invalid id", http.StatusBadRequest)
 		return
 	}
 
+	req := domain.UserGetByIdReq{Id: id}
 	user, err := h.service.GetById(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -162,11 +166,11 @@ func (h UserHandler) GetById(w http.ResponseWriter, r *http.Request) {
 // @ID get-all-users
 // @Accept  json
 // @Produce  json
+// @Param Authorization header string true " you must start Bearer and then space and then token"
 // @Success 200 {object} []domain.UserGetDataList
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /users/getAll [get]
-// @Security ApiKeyAuth
 func (h UserHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
