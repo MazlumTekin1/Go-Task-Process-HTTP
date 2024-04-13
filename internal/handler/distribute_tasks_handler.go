@@ -27,7 +27,7 @@ func NewDistributeTasksHandler(sTask service.TaskService, sUser service.UserServ
 // @Produce  json
 // @Success 200 {object} map[string]interface{}
 // @Router /distributeTasks [get]
-// @Security BearerAuth
+// @Security ApiKeyAuth
 func (h DistributeTasksHandler) DistributeTasks(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)

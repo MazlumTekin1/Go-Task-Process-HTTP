@@ -228,7 +228,7 @@ paths:
               type: string
             type: object
       security:
-      - BearerAuth: []
+      - ApiKeyAuth: []
       summary: Add a new task
       tags:
       - Tasks
@@ -267,7 +267,7 @@ paths:
               type: string
             type: object
       security:
-      - BearerAuth: []
+      - ApiKeyAuth: []
       summary: Delete a task
       tags:
       - Tasks
@@ -299,7 +299,7 @@ paths:
               type: string
             type: object
       security:
-      - BearerAuth: []
+      - ApiKeyAuth: []
       summary: Get all tasks
       tags:
       - Tasks
@@ -336,7 +336,7 @@ paths:
               type: string
             type: object
       security:
-      - BearerAuth: []
+      - ApiKeyAuth: []
       summary: Get a task by ID
       tags:
       - Tasks
@@ -375,7 +375,7 @@ paths:
               type: string
             type: object
       security:
-      - BearerAuth: []
+      - ApiKeyAuth: []
       summary: task Update
       tags:
       - Tasks

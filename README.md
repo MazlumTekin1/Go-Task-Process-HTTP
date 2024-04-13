@@ -46,6 +46,7 @@ A step by step series of examples that tell you how to get a development environ
 5. go to root project directory
 6. cd cmd
 7. go run main.go
+8. Example token user: Email: admin@test.com password:admin
 
 
 ## Running the tests

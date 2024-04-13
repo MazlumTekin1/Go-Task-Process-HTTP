@@ -14,7 +14,7 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-// @securityDefinitions.apikey BearerAuth
+// @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
 // @type string

@@ -101,7 +101,7 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "ApiKeyAuth": []
                     }
                 ],
                 "description": "Adds a new task to the task list",
@@ -162,7 +162,7 @@ const docTemplate = `{
             "delete": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "ApiKeyAuth": []
                     }
                 ],
                 "description": "Delete a task",
@@ -223,7 +223,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "ApiKeyAuth": []
                     }
                 ],
                 "description": "Get all tasks",
@@ -273,7 +273,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "ApiKeyAuth": []
                     }
                 ],
                 "description": "Get a task by ID",
@@ -331,7 +331,7 @@ const docTemplate = `{
             "put": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "ApiKeyAuth": []
                     }
                 ],
                 "description": "Update a task",

@@ -27,7 +27,7 @@ func NewTaskHandler(ser service.TaskService) TaskHandler {
 // @Success 201 {object} map[string]int
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Security BearerAuth
+// @Security ApiKeyAuth
 // @Router /tasks/add [post]
 func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -63,7 +63,7 @@ func (h TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/update [put]
-// @Security BearerAuth
+// @Security ApiKeyAuth
 func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -98,7 +98,7 @@ func (h TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/delete [delete]
-// @Security BearerAuth
+// @Security ApiKeyAuth
 func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -133,7 +133,7 @@ func (h TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/getById [get]
-// @Security BearerAuth
+// @Security ApiKeyAuth
 func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -167,7 +167,7 @@ func (h TaskHandler) GetById(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tasks/getAll [get]
-// @Security BearerAuth
+// @Security ApiKeyAuth
 func (h TaskHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
