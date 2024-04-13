@@ -12,7 +12,7 @@ COPY ./internal/config.json /internal/config.json
 
 COPY . .
 
-RUN go build -o main ./cmd/main.go
+RUN go build -o main ./main.go
 
 EXPOSE 45009
 
