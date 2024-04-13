@@ -339,6 +339,60 @@ const docTemplate = `{
                 }
             }
         },
+        "/tasks/taskStatus": {
+            "get": {
+                "description": "Get all task status",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get all task status",
+                "operationId": "get-all-tasks-status",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": " you must start Bearer and then space and then token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/domain.TaskStatusGetDataList"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/tasks/update": {
             "put": {
                 "description": "Update a task",
@@ -584,7 +638,7 @@ const docTemplate = `{
         },
         "/users/getById/{id}": {
             "get": {
-                "description": "Get user by ID",
+                "description": "Get a user by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -594,7 +648,7 @@ const docTemplate = `{
                 "tags": [
                     "Users"
                 ],
-                "summary": "Get user by ID",
+                "summary": "Get a user by ID",
                 "operationId": "get-user",
                 "parameters": [
                     {
@@ -792,6 +846,17 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.TaskStatusGetDataList": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
                     "type": "string"
                 }
             }

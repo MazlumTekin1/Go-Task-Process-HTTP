@@ -189,3 +189,31 @@ func (h TaskHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(tasks)
 }
+
+// @Summary Get all task status
+// @Description Get all task status
+// @Tags Tasks
+// @ID get-all-tasks-status
+// @Accept  json
+// @Produce  json
+// @Param Authorization header string true " you must start Bearer and then space and then token"
+// @Success 200 {object} []domain.TaskStatusGetDataList
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /tasks/taskStatus [get]
+func (h TaskHandler) GetAllTaskStatus(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	tasks, err := h.service.GetAllTaskStatus()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	m.TaskGetAll.Inc()
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(tasks)
+}

@@ -15,6 +15,7 @@ type TaskRepository interface {
 	Delete(task domain.TaskDeleteReq) (int, error)
 	GetById(task domain.TaskGetByIdReq) (domain.TaskGetDataList, error)
 	GetAll() ([]domain.TaskGetDataList, error)
+	GetAllTaskStatus() ([]domain.TaskStatusGetDataList, error)
 }
 
 type TaskRepositoryImpl struct {
@@ -155,6 +156,33 @@ func (pg *TaskRepositoryImpl) GetAll() ([]domain.TaskGetDataList, error) {
 			return res, domain.NewDatabaseError("TaskRepositoryImpl.GetAll", err)
 		}
 		row.CreatedAt = createdAt.Format("2006-01-02 15:04:05")
+		res = append(res, row)
+	}
+	return res, nil
+}
+func (pg *TaskRepositoryImpl) GetAllTaskStatus() ([]domain.TaskStatusGetDataList, error) {
+
+	res := []domain.TaskStatusGetDataList{}
+	qInsert := `SELECT id, task_statu
+	FROM test.task_status main
+	where main.is_deleted = false
+	order by id desc;`
+	rows, err := pg.db.Query(context.Background(), qInsert)
+
+	if err != nil {
+		return res, domain.NewDatabaseError("TaskRepositoryImpl.GetAll", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		row := domain.TaskStatusGetDataList{}
+		err = rows.Scan(
+			&row.Id,
+			&row.Name,
+		)
+		if err != nil {
+			return res, domain.NewDatabaseError("TaskRepositoryImpl.GetAll", err)
+		}
 		res = append(res, row)
 	}
 	return res, nil

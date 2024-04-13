@@ -199,3 +199,33 @@ func assertTaskGetAll(t *testing.T, responseBody string) {
 	assert.NoError(t, err)
 	assert.NotZero(t, response)
 }
+
+func TestTaskHandler_GetAllTaskStatus(t *testing.T) {
+	mockService := &m.MockTaskService{}
+	mockService.On("GetAllTaskStatus").Return([]domain.TaskStatusGetDataList{}, nil)
+
+	taskHandler := NewTaskHandler(mockService)
+
+	req := getAllTaskStatusRequest()
+
+	res := httptest.NewRecorder()
+
+	taskHandler.GetAllTaskStatus(res, req)
+
+	assertResponseCode(t, res.Code, http.StatusOK)
+	assertTaskGetAllTaskStatus(t, res.Body.String())
+	mockService.AssertCalled(t, "GetAllTaskStatus")
+}
+
+func getAllTaskStatusRequest() *http.Request {
+	req, _ := http.NewRequest("GET", "/tasks/taskStatus", nil)
+	return req
+}
+
+func assertTaskGetAllTaskStatus(t *testing.T, responseBody string) {
+	t.Helper()
+	var response []domain.TaskStatusGetDataList
+	err := json.Unmarshal([]byte(responseBody), &response)
+	assert.NoError(t, err)
+	assert.NotZero(t, response)
+}
