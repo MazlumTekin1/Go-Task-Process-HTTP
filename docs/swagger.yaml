@@ -58,6 +58,13 @@ definitions:
       title:
         type: string
     type: object
+  domain.TaskStatusGetDataList:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
   domain.TaskUpdateReq:
     properties:
       description:
@@ -346,6 +353,42 @@ paths:
       summary: Get a task by ID
       tags:
       - Tasks
+  /tasks/taskStatus:
+    get:
+      consumes:
+      - application/json
+      description: Get all task status
+      operationId: get-all-tasks-status
+      parameters:
+      - description: ' you must start Bearer and then space and then token'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.TaskStatusGetDataList'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get all task status
+      tags:
+      - Tasks
   /tasks/update:
     put:
       consumes:
@@ -512,7 +555,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get user by ID
+      description: Get a user by ID
       operationId: get-user
       parameters:
       - description: User ID
@@ -544,7 +587,7 @@ paths:
             additionalProperties:
               type: string
             type: object
-      summary: Get user by ID
+      summary: Get a user by ID
       tags:
       - Users
   /users/update:
