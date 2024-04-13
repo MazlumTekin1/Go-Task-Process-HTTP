@@ -46,7 +46,7 @@ A step by step series of examples that tell you how to get a development environ
 5. go to root project directory
 6. cd cmd
 7. go run main.go
-8. Example token user: Email: admin@test.com password:admin
+8. Example token user: Email: admin@test.com password: admin (A special condition was set for this user in the backend code. It will generate tokens even if it is not in the database)
 
 ## Use Swagger
 ```bash
@@ -63,6 +63,8 @@ Here
 
 Authorization 
 Here you need to enter the token information you received from the Bearer </login endpoint>.
+
+Example token user: Email: admin@test.com password: admin
 ```
 
 ## Running the tests

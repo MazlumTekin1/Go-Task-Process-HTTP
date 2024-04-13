@@ -12,6 +12,7 @@ type TaskService interface {
 	Delete(req domain.TaskDeleteReq) (int, error)
 	GetById(req domain.TaskGetByIdReq) (domain.TaskGetDataList, error)
 	GetAll() ([]domain.TaskGetDataList, error)
+	GetAllTaskStatus() ([]domain.TaskStatusGetDataList, error)
 }
 
 type taskService struct {
@@ -58,4 +59,7 @@ func (s *taskService) GetById(req domain.TaskGetByIdReq) (domain.TaskGetDataList
 
 func (s *taskService) GetAll() ([]domain.TaskGetDataList, error) {
 	return s.taskRepo.GetAll()
+}
+func (s *taskService) GetAllTaskStatus() ([]domain.TaskStatusGetDataList, error) {
+	return s.taskRepo.GetAllTaskStatus()
 }

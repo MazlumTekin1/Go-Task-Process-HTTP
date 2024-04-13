@@ -49,3 +49,8 @@ type TaskGetDataList struct {
 	Difficulty  int
 	CreatedAt   string
 }
+
+type TaskStatusGetDataList struct {
+	Id   int
+	Name string
+}

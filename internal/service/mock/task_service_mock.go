@@ -19,6 +19,10 @@ func (m *MockTaskService) GetAll() ([]domain.TaskGetDataList, error) {
 	args := m.Called()
 	return args.Get(0).([]domain.TaskGetDataList), args.Error(1)
 }
+func (m *MockTaskService) GetAllTaskStatus() ([]domain.TaskStatusGetDataList, error) {
+	args := m.Called()
+	return args.Get(0).([]domain.TaskStatusGetDataList), args.Error(1)
+}
 
 func (m *MockTaskService) GetById(task domain.TaskGetByIdReq) (domain.TaskGetDataList, error) {
 	args := m.Called(task)
