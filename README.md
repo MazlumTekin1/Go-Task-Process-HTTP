@@ -50,6 +50,7 @@ A step by step series of examples that tell you how to get a development environ
 
 ## Use Swagger
 ```bash
+    If you use Swagger you should start the program locally. Write to root directory go run main.go
    As an example, let's look at the tasks/add API for Task,
 Here 
 {
