@@ -10,7 +10,7 @@
 - Service folder with business rules,
 - Repository folder for database operations,
 - There is a Domain folder for the Model structures of Request and Response operations.
-
+- Go Routine structure is used in the /distributeTasks API. Users and Tasks are pulled together with Channel using Concurrency.
 - In this project, all CRUD operations of Users and Tasks are prepared and a system that calculates the number of Tasks that Users can get per week is designed.
 - You need to pass JWT authentication from /login in order to send requests to the request ends. There is a JWT token query on all existing request ends except login. If there is no token or if it is not passed, the request will not be made.
 
